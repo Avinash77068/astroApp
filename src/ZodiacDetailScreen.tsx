@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ChevronLeft } from 'lucide-react-native';
-import ArrowIcons from './Global/ArrowIcons';
 
 interface ZodiacDetailScreenProps {
   zodiac: string;
@@ -75,16 +74,6 @@ const ZodiacDetailScreen = ({ zodiac, onBack }: ZodiacDetailScreenProps) => {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Header */}
-        {/* <ArrowIcons onOpen={() => {}} onNavigate={() => {}} /> */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={onBack} style={styles.backButton}>
-            <ChevronLeft size={24} color="white" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>{zodiac.toUpperCase()}</Text>
-          <View style={{ width: 40 }} />
-        </View>
-
         {/* Zodiac Hero */}
         <View style={styles.hero}>
           <Animated.Text style={[styles.zodiacIcon, { transform: [{ translateY: starsAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0, -15, 0] }) }] }]}>
@@ -140,7 +129,7 @@ const ZodiacDetailScreen = ({ zodiac, onBack }: ZodiacDetailScreenProps) => {
 export default ZodiacDetailScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1,paddingTop:60 },
+  container: { flex: 1,paddingTop:120 },
   scrollContent: { paddingBottom: 40 },
   star: { position: 'absolute', borderRadius: 50, backgroundColor: 'white' },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 },

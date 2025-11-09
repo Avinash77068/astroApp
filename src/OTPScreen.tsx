@@ -86,14 +86,16 @@ const OTPScreen = ({ onVerify, onChangeNumber }: OTPScreenProps) => {
         {/* OTP Icon */}
         <View style={styles.iconContainer}>
           <View style={styles.otpIcon}>
-            <Text style={{color:'white', fontSize:40}}>🔒</Text>
+            <Text style={{ color: 'white', fontSize: 40 }}>🔒</Text>
           </View>
         </View>
 
         {/* OTP Text */}
         <View style={styles.textContainer}>
           <Text style={styles.title}>OTP Verification</Text>
-          <Text style={styles.subtitle}>A 4 digit code has been sent to your number</Text>
+          <Text style={styles.subtitle}>
+            A 4 digit code has been sent to your number
+          </Text>
         </View>
 
         {/* OTP Inputs */}
@@ -101,13 +103,15 @@ const OTPScreen = ({ onVerify, onChangeNumber }: OTPScreenProps) => {
           {otp.map((digit, index) => (
             <TextInput
               key={index}
-              ref={(ref:any) => (inputRefs[index] = ref)}
+              ref={(ref: any) => (inputRefs[index] = ref)}
               style={styles.input}
               value={digit}
-              onChangeText={(text) => handleOtpChange(index, text)}
+              onChangeText={text => handleOtpChange(index, text)}
               keyboardType="numeric"
               maxLength={1}
-              onKeyPress={({ nativeEvent }) => handleKeyPress(index, nativeEvent.key)}
+              onKeyPress={({ nativeEvent }) =>
+                handleKeyPress(index, nativeEvent.key)
+              }
               placeholder=""
               placeholderTextColor="rgba(255,255,255,0.5)"
             />
@@ -116,13 +120,15 @@ const OTPScreen = ({ onVerify, onChangeNumber }: OTPScreenProps) => {
 
         {/* Verify Button */}
         <TouchableOpacity style={styles.verifyBtn} onPress={onVerify}>
-          <Text style={{color:'white', fontWeight:'600'}}>Verify OTP</Text>
+          <Text style={{ color: 'white', fontWeight: '600' }}>Verify OTP</Text>
         </TouchableOpacity>
 
         {/* Change Number Button */}
         <TouchableOpacity style={styles.changeBtn} onPress={onChangeNumber}>
           <ChevronLeft size={18} color="white" />
-          <Text style={{color:'white', fontWeight:'500'}}>Change Mobile Number</Text>
+          <Text style={{ color: 'white', fontWeight: '500' }}>
+            Change Mobile Number
+          </Text>
         </TouchableOpacity>
 
         {/* Resend */}
@@ -130,6 +136,10 @@ const OTPScreen = ({ onVerify, onChangeNumber }: OTPScreenProps) => {
           Didn't receive code? <Text style={styles.resendLink}>Resend</Text>
         </Text>
       </ScrollView>
+      <View style={styles.completion}>
+        <Text style={styles.statusText}>Otp Verification is Completed</Text>
+        <Text style={styles.statusBadge}>Successfully</Text>
+      </View>
     </LinearGradient>
   );
 };
@@ -138,14 +148,33 @@ export default OTPScreen;
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 30 },
+  content: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 30,
+  },
   star: { position: 'absolute', borderRadius: 50, backgroundColor: 'white' },
   iconContainer: { marginBottom: 30 },
-  otpIcon: { width: 100, height: 100, borderRadius:50, alignItems:'center', justifyContent:'center', backgroundColor:'rgba(255,255,255,0.1)' },
+  otpIcon: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.1)',
+  },
   textContainer: { marginBottom: 30, alignItems: 'center' },
   title: { color: 'white', fontSize: 28, fontWeight: '600', marginBottom: 12 },
-  subtitle: { color: 'rgba(255,255,255,0.7)', fontSize: 15, textAlign: 'center' },
+  subtitle: {
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: 15,
+    textAlign: 'center',
+  },
   inputsContainer: { flexDirection: 'row', gap: 16, marginBottom: 20 },
+  completion: { alignItems: 'center', marginVertical: 20 },
+  statusText: { color: 'white', fontSize: 15 },
+  statusBadge: { color: '#4caf50', fontSize: 14, fontWeight: '600' },
   input: {
     width: 56,
     height: 56,
@@ -178,6 +207,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 20,
   },
-  resendText: { color: 'rgba(255,255,255,0.7)', fontSize: 14, textAlign: 'center' },
+  resendText: {
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: 14,
+    textAlign: 'center',
+  },
   resendLink: { color: '#7c4dff', fontWeight: '600' },
 });

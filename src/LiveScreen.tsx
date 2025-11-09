@@ -66,15 +66,6 @@ const LiveScreen = ({ onBack }: LiveScreenProps) => {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={onBack} style={styles.backButton}>
-            <ChevronLeft size={24} color="white" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Live</Text>
-          <View style={{ width: 40 }} />
-        </View>
-
         {/* Filter Tabs */}
         <View style={styles.filterTabs}>
           {['All', 'Vedic', 'Love', 'Marriage'].map((tab, i) => (
@@ -151,7 +142,7 @@ const LiveScreen = ({ onBack }: LiveScreenProps) => {
 export default LiveScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1,paddingTop:60 },
+  container: { flex: 1,paddingTop:140 },
   scrollContent: { paddingBottom: 20 },
   star: {
     position: 'absolute',

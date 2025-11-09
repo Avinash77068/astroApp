@@ -1,75 +1,214 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import SplashScreen from './SplashScreen';
 import OnboardingScreens from './OnboardingScreens';
 import WelcomeScreen from './WelcomeScreen';
-import PersonalDetailScreen from './PersonalDetailScreen';
 import HomeScreen from './HomeScreen';
-import CallListScreen from './CallListScreen';
-import ChatListScreen from './ChatListScreen';
-import ChatScreen from './ChatScreen';
 import LiveScreen from './LiveScreen';
-import ProfileScreen from './ProfileScreen';
 import ZodiacDetailScreen from './ZodiacDetailScreen';
 import OTPScreen from './OTPScreen';
+import ChatScreen from './chatScreen/ChatScreen';
+import CallListScreen from './callListScreen/CallListScreen';
+import ArrowIcons from './Global/ArrowIcons';
+import ProfileScreen from './ProfileScreen';
+import PersonalDetailScreen from './personalDetailScreen/PersonalDetailScreen';
+import ChatListScreen from './ChatList/ChatListScreen';
 
 export default function Totalfiles() {
   const [currentScreen, setCurrentScreen] = useState('splash');
   const [selectedZodiac, setSelectedZodiac] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    name: '',
+    dob: '',
+    location: '',
+    gender: '',
+  });
+  const Header = (title = 'App') => (
+    <ArrowIcons
+      showBack
+      onBack={() => setCurrentScreen('home')}
+      title={title}
+      backgroundColor="#4a148c"
+      style={
+        currentScreen === 'personal'
+          ? {
+              justifyContent: 'flex-start',
+              gap: 10,
+              alignItems: 'center',
+              flexDirection: 'row',
+              backgroundColor: 'transparent',
+            }
+          : { justifyContent: 'space-between',width:'100%', gap: 10 }
+      }
+      iconstyle={
+        currentScreen === 'personal'
+          ? {
+              justifyContent: 'flex-start',
+              gap: 10,
+              alignItems: 'center',
+              flexDirection: 'row',
+              backgroundColor: 'transparent',
+            }
+          : { justifyContent: 'center', gap: 10 }
+      }
+    />
+  );
 
   const renderScreen = () => {
-    switch(currentScreen) {
+    switch (currentScreen) {
       case 'splash':
-        return <SplashScreen onComplete={() => setCurrentScreen('onboarding')} />;
+        return (
+          <>
+            {/* {Header('Splash')} */}
+            <View style={styles.content}>
+              <SplashScreen onComplete={() => setCurrentScreen('onboarding')} />
+            </View>
+          </>
+        );
       case 'onboarding':
-        return <OnboardingScreens onComplete={() => setCurrentScreen('welcome')} />;
+        return (
+          <>
+            {/* {Header('Onboarding')} */}
+            <View style={styles.content}>
+              <OnboardingScreens
+                onComplete={() => setCurrentScreen('welcome')}
+              />
+            </View>
+          </>
+        );
       case 'welcome':
-        return <WelcomeScreen onNext={() => setCurrentScreen('otp')} />;
+        return (
+          <>
+            {/* {Header('Welcome')} */}
+            <View style={styles.content}>
+              <WelcomeScreen onNext={() => setCurrentScreen('otp')} />
+            </View>
+          </>
+        );
       case 'otp':
-        return <OTPScreen onChangeNumber={() => setCurrentScreen('welcome')} onVerify={() => setCurrentScreen('personal')} />;
+        return (
+          <>
+            {/* {Header('Verify')} */}
+            <View style={styles.content}>
+              <OTPScreen
+                onChangeNumber={() => setCurrentScreen('welcome')}
+                onVerify={() => setCurrentScreen('personal')}
+              />
+            </View>
+          </>
+        );
       case 'personal':
-        return <PersonalDetailScreen onComplete={() => setCurrentScreen('home')} />;
+        return (
+          <>
+            {Header('Personal Detail')}
+            <View style={styles.content}>
+              <PersonalDetailScreen
+                onComplete={() => setCurrentScreen('home')}
+              />
+            </View>
+          </>
+        );
       case 'home':
-        return <HomeScreen
-          onNavigate={setCurrentScreen}
-          onOpen={() => setSidebarOpen(!sidebarOpen)}
-          isOpen={sidebarOpen}
-          onZodiacSelect={(zodiac: string) => {
-            setSelectedZodiac(zodiac);
-            setCurrentScreen('zodiac-detail');
-          }}
-        />;
+        return (
+          <HomeScreen
+            onNavigate={setCurrentScreen}
+            onOpen={() => setSidebarOpen(!sidebarOpen)}
+            isOpen={sidebarOpen}
+            onZodiacSelect={(zodiac: string) => {
+              setSelectedZodiac(zodiac);
+              setCurrentScreen('zodiac-detail');
+            }}
+          />
+        );
       case 'zodiac-detail':
-        return <ZodiacDetailScreen zodiac={selectedZodiac} onBack={() => setCurrentScreen('home')} />;
+        return (
+          <>
+            {Header('Zodiac Details')}
+            <View style={styles.content}>
+              <ZodiacDetailScreen
+                zodiac={selectedZodiac}
+                onBack={() => setCurrentScreen('home')}
+              />
+            </View>
+          </>
+        );
       case 'call':
-        return <CallListScreen onBack={() => setCurrentScreen('home')} onCall={() => {}} />;
+        return (
+          <>
+            {Header('Call List')}
+            <View style={styles.content}>
+              <CallListScreen
+                onBack={() => setCurrentScreen('home')}
+                onCall={() => {}}
+              />
+            </View>
+          </>
+        );
       case 'chat-list':
-        return <ChatListScreen onBack={() => setCurrentScreen('home')} onSelectChat={() => setCurrentScreen('chat')} />;
+        return (
+          <>
+            {Header('Chats')}
+            <View style={styles.content}>
+              <ChatListScreen
+                onBack={() => setCurrentScreen('home')}
+                onSelectChat={() => setCurrentScreen('chat')}
+              />
+            </View>
+          </>
+        );
       case 'chat':
-        return <ChatScreen onBack={() => setCurrentScreen('chat-list')} />;
+        return (
+          <>
+            {Header('Chat')}
+            <View style={styles.content}>
+              <ChatScreen onBack={() => setCurrentScreen('chat-list')} />
+            </View>
+          </>
+        );
       case 'live':
-        return <LiveScreen onBack={() => setCurrentScreen('home')} />;
+        return (
+          <>
+            {Header('Live')}
+            <View style={styles.content}>
+              <LiveScreen onBack={() => setCurrentScreen('home')} />
+            </View>
+          </>
+        );
       case 'profile':
-        return <ProfileScreen onBack={() => setCurrentScreen('home')} />;
-      case 'logout':
-        return <WelcomeScreen onNext={() => setCurrentScreen('otp')} />;
+        return (
+          <>
+            {Header('Profile')}
+            <View style={styles.content}>
+              <ProfileScreen />
+            </View>
+          </>
+        );
       default:
-        return <SplashScreen onComplete={() => setCurrentScreen('onboarding')} />;
+        return (
+          <>
+            {Header('Splash')}
+            <View style={styles.content}>
+              <SplashScreen onComplete={() => setCurrentScreen('onboarding')} />
+            </View>
+          </>
+        );
     }
   };
 
-  return (
-    <View style={styles.container}> 
-    {renderScreen()  }
-    </View>
-  );
+  return <View style={styles.container}>{renderScreen()}</View>;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#4a148c',
-    width:'100%',
+    width: '100%',
+  },
+  content: {
+    flex: 1,
+    marginTop: 10, // space below header
+    paddingHorizontal: 6,
   },
 });

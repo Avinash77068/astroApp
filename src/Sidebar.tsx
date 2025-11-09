@@ -50,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onNavigate, isOpen, onClose }) => {
         </View>
 
         <View style={styles.menu}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigate("home")}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => handleNavigate("splash")}>
             <Home size={20} color="#ddd" />
             <Text style={styles.menuText}>Home</Text>
           </TouchableOpacity>
