@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 
-export default function StepGender({ formData, setFormData }) {
+export default function StepGender({ formData, setFormData }:any) {
   return (
     <View style={styles.stepContainer}>
       <View style={styles.formGroup}>

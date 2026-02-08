@@ -9,20 +9,11 @@ import {
   FlatList,
   Animated,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import { Menu, Search, Bell, Settings, ChevronRight, Home, Phone, MessageCircle, Video, User } from 'lucide-react-native';
-import Sidebar from './Sidebar';
 
-const zodiacSigns = [
-  { name: 'Aries', icon: '♈', period: 'Mar 21 - Apr 19' },
-  { name: 'Taurus', icon: '♉', period: 'Apr 20 - May 20' },
-  { name: 'Gemini', icon: '♊', period: 'May 21 - Jun 20' },
-  { name: 'Cancer', icon: '♋', period: 'Jun 21 - Jul 22' },
-  { name: 'Leo', icon: '♌', period: 'Jul 23 - Aug 22' },
-  { name: 'Virgo', icon: '♍', period: 'Aug 23 - Sep 22' },
-  { name: 'Libra', icon: '♎', period: 'Sep 23 - Oct 22' },
-  { name: 'Scorpio', icon: '♏', period: 'Oct 23 - Nov 21' },
-];
+import { Menu, Search, Bell, Settings, ChevronRight, Home, Phone, MessageCircle, Video, User } from 'lucide-react-native';
+import Sidebar from './Global/Sidebar';
+import StarBackground from './Global/StarBackground';
+
 
 const astrologers = [
   { name: 'Astro Vivek K', rating: 5.0, experience: '8 Years', price: 22, image: '👨‍🦱' },
@@ -32,54 +23,17 @@ const astrologers = [
 
 interface HomeScreenProps {
   onNavigate: (screen: string) => void;
-  onZodiacSelect: (zodiac: string) => void;
   onOpen: () => void; 
   isOpen: boolean;
 }
 
-const { width } = Dimensions.get('window');
+const HomeScreen = ({ onNavigate, onOpen, isOpen }: HomeScreenProps) => {
 
-const HomeScreen = ({ onNavigate, onZodiacSelect, onOpen, isOpen }: HomeScreenProps) => {
-  const starsAnim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.timing(starsAnim, {
-        toValue: 1,
-        duration: 3000,
-        useNativeDriver: true,
-      })
-    ).start();
-  }, []);
 
   return (
     <View  style={styles.container}>
       {/* Stars */}
-      <View style={StyleSheet.absoluteFill}>
-        {[...Array(40)].map((_, i) => {
-          const top = Math.random() * 100;
-          const left = Math.random() * 100;
-          const size = Math.random() * 3 + 1;
-          return (
-            <Animated.View
-              key={i}
-              style={[
-                styles.star,
-                {
-                  width: size,
-                  height: size,
-                  top: `${top}%`,
-                  left: `${left}%`,
-                  opacity: starsAnim.interpolate({
-                    inputRange: [0, 0.5, 1],
-                    outputRange: [0.3, 1, 0.3],
-                  }),
-                },
-              ]}
-            />
-          );
-        })}
-      </View>
+      <StarBackground/>
 
       {/* Sidebar */}
       <Sidebar isOpen={isOpen} onClose={onOpen} onNavigate={onNavigate} />
@@ -106,52 +60,6 @@ const HomeScreen = ({ onNavigate, onZodiacSelect, onOpen, isOpen }: HomeScreenPr
           </View>
         </View>
 
-        {/* Zodiac Section */}
-        <View style={[styles.section,styles.paddingHorizontal]}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Zodiac Sign</Text>
-            <TouchableOpacity onPress={() => onZodiacSelect('Leo')} style={styles.seeAllBtn}>
-              <ChevronRight size={20} color="white" />
-            </TouchableOpacity>
-          </View>
-
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={zodiacSigns}
-            keyExtractor={(item) => item.name}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.zodiacCard} onPress={() => onZodiacSelect(item.name)}>
-                <Text style={styles.zodiacIcon}>{item.icon}</Text>
-                <Text style={styles.zodiacName}>{item.name}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-
-        {/* Live Section */}
-        <View style={[styles.section,styles.paddingHorizontal]}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Live</Text>
-            <TouchableOpacity onPress={() => onNavigate('live')} style={styles.seeAllBtn}>
-              <ChevronRight size={20} color="white" />
-            </TouchableOpacity>
-          </View>
-
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={[1,2,3]}
-            keyExtractor={(item) => item.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.liveCard} onPress={() => onNavigate('live')}>
-                <View style={styles.liveBadge}><Text style={{color:'white'}}>LIVE</Text></View>
-                <Text style={styles.liveAvatar}>🎭</Text>
-                <Text style={styles.liveViewers}>👁 {Math.floor(Math.random()*900+100)}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
 
         {/* Astrologers Section */}
         <View style={[styles.section,styles.paddingHorizontal]}>
@@ -178,7 +86,6 @@ const HomeScreen = ({ onNavigate, onZodiacSelect, onOpen, isOpen }: HomeScreenPr
         <TouchableOpacity style={[styles.navItem, styles.active]}><Home size={24} color="white"/><Text style={styles.navText}>Home</Text></TouchableOpacity>
         <TouchableOpacity style={styles.navItem} onPress={() => onNavigate('call')}><Phone size={24} color="white"/><Text style={styles.navText}>Call</Text></TouchableOpacity>
         <TouchableOpacity style={styles.navItem} onPress={() => onNavigate('chat-list')}><MessageCircle size={24} color="white"/><Text style={styles.navText}>Chat</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => onNavigate('live')}><Video size={24} color="white"/><Text style={styles.navText}>Live</Text></TouchableOpacity>
         <TouchableOpacity style={styles.navItem} onPress={() => onNavigate('profile')}><User size={24} color="white"/><Text style={styles.navText}>Profile</Text></TouchableOpacity>
       </View>
     </View>

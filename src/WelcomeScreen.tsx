@@ -37,10 +37,7 @@ const WelcomeScreen = ({ onNext }: WelcomeScreenProps) => {
   }, []);
 
   return (
-    <LinearGradient
-      colors={['#4a148c', '#6a1b9a']}
-      style={styles.container}
-    >
+    <LinearGradient colors={['#4a148c', '#6a1b9a']} style={styles.container}>
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView
           contentContainerStyle={styles.contentContainer}
@@ -71,8 +68,8 @@ const WelcomeScreen = ({ onNext }: WelcomeScreenProps) => {
           <Animated.View style={[styles.formContainer, { opacity: fadeAnim }]}>
             <View style={styles.phoneContainer}>
               <View style={styles.countrySelector}>
-                <Text style={styles.flag}>🇺🇸</Text>
-                <Text style={styles.countryCode}>+1</Text>
+                <Text style={styles.flag}>🇮🇳</Text>
+                <Text style={styles.countryCode}>+91</Text>
                 <Text style={styles.dropdownArrow}>▼</Text>
               </View>
               <TextInput

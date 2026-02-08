@@ -1,30 +1,18 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import SplashScreen from './SplashScreen';
+import SplashScreen from './Global/SplashScreen';
 import OnboardingScreens from './OnboardingScreens';
 import WelcomeScreen from './WelcomeScreen';
 import HomeScreen from './HomeScreen';
-import LiveScreen from './LiveScreen';
-import ZodiacDetailScreen from './ZodiacDetailScreen';
-import OTPScreen from './OTPScreen';
-import ChatScreen from './chatScreen/ChatScreen';
-import CallListScreen from './callListScreen/CallListScreen';
+import OTPScreen from './Global/OTPScreen';
 import ArrowIcons from './Global/ArrowIcons';
-import ProfileScreen from './ProfileScreen';
-import PersonalDetailScreen from './personalDetailScreen/PersonalDetailScreen';
-import ChatListScreen from './ChatList/ChatListScreen';
+import ProfileScreen from './screen/ProfileScreen';
+import PersonalDetailScreen from './screen/personalDetailScreen/PersonalDetailScreen';
 
 export default function Totalfiles() {
   const [currentScreen, setCurrentScreen] = useState('splash');
   const [selectedZodiac, setSelectedZodiac] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    name: '',
-    dob: '',
-    location: '',
-    gender: '',
-  });
   const Header = (title = 'App') => (
     <ArrowIcons
       showBack
@@ -99,6 +87,10 @@ export default function Totalfiles() {
             </View>
           </>
         );
+      case "home": 
+        return (
+          <HomeScreen onNavigate={setCurrentScreen} onOpen={() => setSidebarOpen(!sidebarOpen)} isOpen={sidebarOpen} />
+        )
       case 'personal':
         return (
           <>
@@ -110,72 +102,8 @@ export default function Totalfiles() {
             </View>
           </>
         );
-      case 'home':
-        return (
-          <HomeScreen
-            onNavigate={setCurrentScreen}
-            onOpen={() => setSidebarOpen(!sidebarOpen)}
-            isOpen={sidebarOpen}
-            onZodiacSelect={(zodiac: string) => {
-              setSelectedZodiac(zodiac);
-              setCurrentScreen('zodiac-detail');
-            }}
-          />
-        );
-      case 'zodiac-detail':
-        return (
-          <>
-            {Header('Zodiac Details')}
-            <View style={styles.content}>
-              <ZodiacDetailScreen
-                zodiac={selectedZodiac}
-                onBack={() => setCurrentScreen('home')}
-              />
-            </View>
-          </>
-        );
-      case 'call':
-        return (
-          <>
-            {Header('Call List')}
-            <View style={styles.content}>
-              <CallListScreen
-                onBack={() => setCurrentScreen('home')}
-                onCall={() => {}}
-              />
-            </View>
-          </>
-        );
-      case 'chat-list':
-        return (
-          <>
-            {Header('Chats')}
-            <View style={styles.content}>
-              <ChatListScreen
-                onBack={() => setCurrentScreen('home')}
-                onSelectChat={() => setCurrentScreen('chat')}
-              />
-            </View>
-          </>
-        );
-      case 'chat':
-        return (
-          <>
-            {Header('Chat')}
-            <View style={styles.content}>
-              <ChatScreen onBack={() => setCurrentScreen('chat-list')} />
-            </View>
-          </>
-        );
-      case 'live':
-        return (
-          <>
-            {Header('Live')}
-            <View style={styles.content}>
-              <LiveScreen onBack={() => setCurrentScreen('home')} />
-            </View>
-          </>
-        );
+      
+     
       case 'profile':
         return (
           <>
@@ -188,7 +116,7 @@ export default function Totalfiles() {
       default:
         return (
           <>
-            {Header('Splash')}
+            {Header('home')}
             <View style={styles.content}>
               <SplashScreen onComplete={() => setCurrentScreen('onboarding')} />
             </View>
