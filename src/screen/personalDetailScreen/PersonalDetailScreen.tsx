@@ -12,14 +12,16 @@ import StepName from './StepName';
 import StepDOB from './StepDOB';
 import StepLocation from './StepLocation';
 import StepGender from './StepGender';
+import { Button } from '../../commonComponents/Button';
+
 interface Props {
   onComplete: () => void;
 }
 interface setFormData {
-    name: string;
-    dob: string;
-    location: string;
-    gender: string;
+    name ?: string;
+    dob ?: string;
+    location ?: string;
+    gender ?: string;
 }
 
 export default function PersonalDetailScreen({ onComplete }: Props) {
@@ -43,7 +45,7 @@ export default function PersonalDetailScreen({ onComplete }: Props) {
   const handleNext = () => (step < 4 ? setStep(step + 1) : onComplete());
   const handleBack = () => step > 1 && setStep(step - 1);
 
-  const StepComponent = [StepName, StepDOB, StepLocation, StepGender][step - 1];
+  const StepComponent:any = [StepName, StepDOB, StepLocation, StepGender][step - 1];
   const isDisabled =
     (step === 1 && !formData.name) ||
     (step === 2 && !formData.dob) ||
@@ -58,10 +60,10 @@ export default function PersonalDetailScreen({ onComplete }: Props) {
           <StepComponent formData={formData} setFormData={setFormData} />
         </Animated.View>
 
-        <ProgressButton
+        <Button
           disabled={isDisabled}
           onPress={handleNext}
-          label={step === 4 ? 'Submit' : 'Done'}
+          title={step === 4 ? 'Submit' : 'Done'}
         />
       </ScrollView>
     </SafeAreaView>

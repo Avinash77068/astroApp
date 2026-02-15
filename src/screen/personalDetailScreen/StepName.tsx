@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { Input } from '../../commonComponents/Input';
 
 export default function StepName({ formData, setFormData }: { formData: { name: string; dob: string; location: string; gender: string; }; setFormData: (formData: { name: string; dob: string; location: string; gender: string; }) => void; }) {
   return (
@@ -7,13 +8,14 @@ export default function StepName({ formData, setFormData }: { formData: { name: 
       <Text style={styles.greeting}>Hey..! {formData.name || 'User'}</Text>
       <View style={styles.formGroup}>
         <Text style={styles.label}>What's Your Name</Text>
-        <TextInput
+        <Input
           style={styles.input}
           placeholder="Enter your name"
           placeholderTextColor="rgba(255,255,255,0.5)"
           value={formData.name}
           onChangeText={name => setFormData({ ...formData, name })}
         />
+
       </View>
     </View>
   );

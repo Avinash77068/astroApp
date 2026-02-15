@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Mail } from 'lucide-react-native';
+import { Button } from './commonComponents/Button';
+import { Input } from './commonComponents/Input';
 
 interface WelcomeScreenProps {
   onNext: () => void;
@@ -72,7 +74,7 @@ const WelcomeScreen = ({ onNext }: WelcomeScreenProps) => {
                 <Text style={styles.countryCode}>+91</Text>
                 <Text style={styles.dropdownArrow}>▼</Text>
               </View>
-              <TextInput
+              <Input
                 style={styles.phoneInput}
                 placeholder="Enter Mobile Number"
                 placeholderTextColor="rgba(255,255,255,0.5)"
@@ -82,9 +84,8 @@ const WelcomeScreen = ({ onNext }: WelcomeScreenProps) => {
               />
             </View>
 
-            <TouchableOpacity style={styles.sendBtn} onPress={onNext}>
-              <Text style={styles.sendBtnText}>Send OTP</Text>
-            </TouchableOpacity>
+            <Button title="Send OTP" onPress={onNext} />
+
 
             <TouchableOpacity style={styles.emailBtn}>
               <Mail size={18} color="white" />
@@ -189,6 +190,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     color: 'white',
+    backgroundColor: 'transparent',
     fontSize: 15,
   },
   sendBtn: {

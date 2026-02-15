@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Search } from 'lucide-react-native';
+import { Input } from '../../commonComponents/Input';
 
 export default function StepLocation({ formData, setFormData }) {
   return (
@@ -13,7 +14,7 @@ export default function StepLocation({ formData, setFormData }) {
             color="rgba(255,255,255,0.6)"
             style={styles.searchIcon}
           />
-          <TextInput
+          <Input
             style={styles.input}
             placeholder="Enter the Location"
             placeholderTextColor="rgba(255,255,255,0.5)"

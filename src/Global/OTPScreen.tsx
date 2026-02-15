@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ChevronLeft } from 'lucide-react-native';
+import { Button } from '../commonComponents/Button';
 
 interface OTPScreenProps {
   onVerify: () => void;
@@ -119,9 +120,11 @@ const OTPScreen = ({ onVerify, onChangeNumber }: OTPScreenProps) => {
         </View>
 
         {/* Verify Button */}
-        <TouchableOpacity style={styles.verifyBtn} onPress={onVerify}>
-          <Text style={{ color: 'white', fontWeight: '600' }}>Verify OTP</Text>
-        </TouchableOpacity>
+        <Button
+          style={styles.verifyBtn}
+          title="Verify OTP"
+          onPress={onVerify}
+        />
 
         {/* Change Number Button */}
         <TouchableOpacity style={styles.changeBtn} onPress={onChangeNumber}>
@@ -136,10 +139,10 @@ const OTPScreen = ({ onVerify, onChangeNumber }: OTPScreenProps) => {
           Didn't receive code? <Text style={styles.resendLink}>Resend</Text>
         </Text>
       </ScrollView>
-      <View style={styles.completion}>
+      {/* <View style={styles.completion}>
         <Text style={styles.statusText}>Otp Verification is Completed</Text>
         <Text style={styles.statusBadge}>Successfully</Text>
-      </View>
+      </View> */}
     </LinearGradient>
   );
 };

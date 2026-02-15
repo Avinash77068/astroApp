@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Check } from 'lucide-react-native';
+import { Input } from '../../commonComponents/Input';
 
 export default function StepDOB({ formData, setFormData }: { formData: { dob: string }; setFormData: (formData: { dob: string }) => void }) {
   return (
@@ -8,7 +9,7 @@ export default function StepDOB({ formData, setFormData }: { formData: { dob: st
       <View style={styles.formGroup}>
         <Text style={styles.label}>Date of Birth</Text>
         <View style={styles.dobContainer}>
-          <TextInput
+          <Input
             style={[styles.input, { flex: 1 }]}
             placeholder="DD/MM/YYYY"
             placeholderTextColor="rgba(255,255,255,0.5)"
