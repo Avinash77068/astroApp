@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, memo } from 'react';
 import {
   Pressable,
   Text,
@@ -8,6 +8,8 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
+import { colors, spacing, typography } from '../theme';
+import { BORDER_RADIUS } from '../constants';
 
 export type ButtonVariant =
   | 'primary'
@@ -32,39 +34,38 @@ interface ButtonProps {
   textStyle?: TextStyle;
 }
 
-
 const variantStyles: Record<ButtonVariant, ViewStyle> = {
   primary: {
-    backgroundColor: '#7c4dff',
+    backgroundColor: colors.button.primary,
   },
   secondary: {
-    backgroundColor: '#4B5563',
+    backgroundColor: colors.button.secondary,
   },
   danger: {
-    backgroundColor: '#DC2626',
+    backgroundColor: colors.button.danger,
   },
   outline: {
-    backgroundColor: 'transparent',
+    backgroundColor: colors.transparent,
     borderWidth: 1,
-    borderColor: '#D1D5DB',
+    borderColor: colors.border.dark,
   },
   ghost: {
-    backgroundColor: 'transparent',
+    backgroundColor: colors.transparent,
   },
 };
 
 const textVariantStyles: Record<ButtonVariant, TextStyle> = {
-  primary: { color: '#FFFFFF' },
-  secondary: { color: '#FFFFFF' },
-  danger: { color: '#FFFFFF' },
-  outline: { color: '#374151' },
-  ghost: { color: '#374151' },
+  primary: { color: colors.white },
+  secondary: { color: colors.white },
+  danger: { color: colors.white },
+  outline: { color: colors.text.secondary },
+  ghost: { color: colors.text.secondary },
 };
 
 const sizeStyles: Record<ButtonSize, ViewStyle> = {
-  sm: { paddingVertical: 8, paddingHorizontal: 12 },
-  md: { paddingVertical: 12, paddingHorizontal: 16 },
-  lg: { paddingVertical: 16, paddingHorizontal: 24 },
+  sm: { paddingVertical: spacing.sm, paddingHorizontal: spacing.md },
+  md: { paddingVertical: spacing.md, paddingHorizontal: spacing.lg },
+  lg: { paddingVertical: spacing.lg, paddingHorizontal: spacing.xxl },
 };
 
 export const Button = forwardRef<View, ButtonProps>(
@@ -121,24 +122,20 @@ Button.displayName = 'Button';
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: 8,
+    borderRadius: BORDER_RADIUS.sm,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-    padding: 16,
-    backgroundColor: '#7c4dff',
-    marginBottom: 16,
   },
   text: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: typography.fontSize.lg,
+    fontWeight: typography.fontWeight.semibold,
   },
   content: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   icon: {
-    marginHorizontal: 6,
+    marginHorizontal: spacing.xs + 2,
   },
   pressed: {
     opacity: 0.85,

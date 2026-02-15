@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, memo } from 'react';
 import {
   View,
   Text,
@@ -6,16 +6,18 @@ import {
   StyleSheet,
   TextInputProps,
   TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
+import { colors, spacing, typography } from '../theme';
 
 interface InputProps extends TextInputProps {
   label?: string;
   error?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  containerStyle?: any;
-  inputContainerStyle?: any;
-  secureToggle?: boolean; // for password toggle
+  containerStyle?: ViewStyle;
+  inputContainerStyle?: ViewStyle;
+  secureToggle?: boolean;
 }
 
 export const Input = forwardRef<TextInput, InputProps>(
@@ -89,38 +91,38 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    marginBottom: 6,
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#374151',
+    marginBottom: spacing.xs + 2,
+    fontSize: typography.fontSize.base,
+    fontWeight: typography.fontWeight.medium,
+    color: colors.text.secondary,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 0,
-    borderColor: 'transparent',
-    backgroundColor: 'transparent',
+    borderColor: colors.transparent,
+    backgroundColor: colors.transparent,
   },
   input: {
     flex: 1,
-    fontSize: 16,
-    color: '#111827',
+    fontSize: typography.fontSize.lg,
+    color: colors.text.primary,
   },
   icon: {
-    marginHorizontal: 6,
+    marginHorizontal: spacing.xs + 2,
   },
   focused: {
-    borderColor: '#2563EB',
+    borderColor: colors.status.info,
   },
   errorBorder: {
-    borderColor: '#DC2626',
+    borderColor: colors.status.error,
   },
   errorText: {
-    marginTop: 4,
-    fontSize: 12,
-    color: '#DC2626',
+    marginTop: spacing.xs,
+    fontSize: typography.fontSize.xs,
+    color: colors.status.error,
   },
   disabled: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: colors.border.light,
   },
 });

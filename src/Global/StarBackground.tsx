@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
-import { View, Animated, Dimensions, StyleSheet } from 'react-native';
+import React, { useEffect, useMemo, memo } from 'react';
+import { View, Animated, StyleSheet } from 'react-native';
+import { SCREEN_WIDTH, SCREEN_HEIGHT, STAR_COUNT } from '../constants';
+import { colors } from '../theme';
 
-const { width, height } = Dimensions.get('window');
-
-export default function StarBackground() {
-  const stars = [...Array(45)].map(() => ({
-    left: Math.random() * width,
-    top: Math.random() * height,
-    size: Math.random() * 3 + 1,
-    delay: Math.random() * 3000,
-    opacity: new Animated.Value(0.3),
-  }));
+const StarBackground = memo(() => {
+  const stars = useMemo(
+    () =>
+      [...Array(STAR_COUNT.high)].map(() => ({
+        left: Math.random() * SCREEN_WIDTH,
+        top: Math.random() * SCREEN_HEIGHT,
+        size: Math.random() * 3 + 1,
+        opacity: new Animated.Value(0.3),
+      })),
+    []
+  );
 
   useEffect(() => {
     stars.forEach(star => {
@@ -26,10 +29,10 @@ export default function StarBackground() {
             duration: 1000,
             useNativeDriver: true,
           }),
-        ]),
+        ])
       ).start();
     });
-  }, []);
+  }, [stars]);
 
   return (
     <View style={StyleSheet.absoluteFill}>
@@ -50,12 +53,16 @@ export default function StarBackground() {
       ))}
     </View>
   );
-}
+});
+
+StarBackground.displayName = 'StarBackground';
 
 const styles = StyleSheet.create({
   star: {
     position: 'absolute',
     borderRadius: 50,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
   },
 });
+
+export default StarBackground;
