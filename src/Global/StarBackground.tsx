@@ -4,7 +4,7 @@ import { View, Animated, Dimensions, StyleSheet } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 export default function StarBackground() {
-  const stars = [...Array(15)].map(() => ({
+  const stars = [...Array(45)].map(() => ({
     left: Math.random() * width,
     top: Math.random() * height,
     size: Math.random() * 3 + 1,
