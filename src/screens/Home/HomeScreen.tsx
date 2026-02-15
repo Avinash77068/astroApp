@@ -77,6 +77,17 @@ export const HomeScreen = memo<HomeScreenProps>(({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>{strings.home.categories}</Text>
+        <FlatList
+          data={categories}
+          renderItem={renderCategory}
+          keyExtractor={keyExtractor}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.categoriesList}
+        />
+      </View>
       <View style={styles.header}>
         <View>
           <Text style={styles.welcomeText}>{strings.home.welcome},</Text>
@@ -92,18 +103,6 @@ export const HomeScreen = memo<HomeScreenProps>(({ navigation }) => {
         placeholder={strings.home.searchPlaceholder}
         placeholderTextColor={styles.placeholder.color}
       />
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{strings.home.categories}</Text>
-        <FlatList
-          data={categories}
-          renderItem={renderCategory}
-          keyExtractor={keyExtractor}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.categoriesList}
-        />
-      </View>
 
       <Text style={styles.sectionTitle}>{strings.home.items}</Text>
 

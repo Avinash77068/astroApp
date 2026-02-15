@@ -1,40 +1,40 @@
 export const colors = {
-  primary: '#6366F1',
+  primary: '#5f61beff',
   primaryDark: '#4F46E5',
   primaryLight: '#818CF8',
-  
+
   secondary: '#EC4899',
   secondaryDark: '#DB2777',
   secondaryLight: '#F472B6',
-  
+
   background: {
-    primary: '#FFFFFF',
+    primary: '#a7a8baff',
     secondary: '#F9FAFB',
     tertiary: '#F3F4F6',
     dark: '#111827',
   },
-  
+
   text: {
     primary: '#111827',
     secondary: '#6B7280',
     tertiary: '#9CA3AF',
-    inverse: '#FFFFFF',
+    inverse: '#d92121ff',
   },
-  
+
   border: {
     light: '#E5E7EB',
     medium: '#D1D5DB',
     dark: '#9CA3AF',
   },
-  
+
   error: '#EF4444',
   success: '#10B981',
   warning: '#F59E0B',
   info: '#3B82F6',
-  
+
   white: '#FFFFFF',
   black: '#000000',
-  
+
   overlay: 'rgba(0, 0, 0, 0.5)',
   transparent: 'transparent',
 };
