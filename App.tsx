@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, StatusBar, StyleSheet, Dimensions } from 'react-native';
-import Totalfiles from './src/Totalfiles';
+import Totalfiles from './src/main/Totalfiles';
 
 const { width, height } = Dimensions.get('window');
 

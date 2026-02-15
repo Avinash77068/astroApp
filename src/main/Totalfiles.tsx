@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import SplashScreen from './Global/SplashScreen';
+import SplashScreen from '../Global/SplashScreen';
 import OnboardingScreens from './OnboardingScreens';
-import WelcomeScreen from './WelcomeScreen';
+import WelcomeScreen from '../WelcomeScreen';
 import HomeScreen from './HomeScreen';
-import OTPScreen from './Global/OTPScreen';
-import ArrowIcons from './Global/ArrowIcons';
-import ProfileScreen from './screen/ProfileScreen';
-import PersonalDetailScreen from './screen/personalDetailScreen/PersonalDetailScreen';
+import OTPScreen from '../Global/OTPScreen';
+import ArrowIcons from '../Global/ArrowIcons';
+import ProfileScreen from '../screen/ProfileScreen';
+import PersonalDetailScreen from '../screen/personalDetailScreen/PersonalDetailScreen';
 
 export default function Totalfiles() {
   const [currentScreen, setCurrentScreen] = useState('splash');
