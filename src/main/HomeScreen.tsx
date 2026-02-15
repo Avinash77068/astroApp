@@ -11,8 +11,9 @@ import {
 } from 'react-native';
 
 import { Menu, Search, Bell, Settings, ChevronRight, Home, Phone, MessageCircle, Video, User } from 'lucide-react-native';
-import Sidebar from './Global/Sidebar';
-import StarBackground from './Global/StarBackground';
+import StarBackground from '../Global/StarBackground';
+import Sidebar from '../Global/Sidebar';
+
 
 
 const astrologers = [

@@ -32,9 +32,10 @@ interface ButtonProps {
   textStyle?: TextStyle;
 }
 
+
 const variantStyles: Record<ButtonVariant, ViewStyle> = {
   primary: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#7c4dff',
   },
   secondary: {
     backgroundColor: '#4B5563',
@@ -123,6 +124,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
+    padding: 16,
+    backgroundColor: '#7c4dff',
+    marginBottom: 16,
   },
   text: {
     fontSize: 16,

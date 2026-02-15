@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Mail } from 'lucide-react-native';
-import { Button } from './commonComponents/Button';
-import { Input } from './commonComponents/Input';
+import { Button } from '../commonComponents/Button';
+import { Input } from '../commonComponents/Input';
 
 interface WelcomeScreenProps {
   onNext: () => void;
