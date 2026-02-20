@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import useSidebar from '../hook/useSidebar';
+import useSidebar from '../../store/useSidebar';
 
 const Sidebar = () => {
   const { closeSidebar } = useSidebar();

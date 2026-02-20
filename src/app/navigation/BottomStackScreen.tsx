@@ -12,7 +12,7 @@ import {
   Stars,
   User,
 } from 'lucide-react-native';
-import useSidebar from '../../component/hook/useSidebar';
+import useSidebar from '../../store/useSidebar';
 import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
