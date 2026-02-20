@@ -6,14 +6,18 @@ import KundliFormScreen from '../../component/screen/KundliFormScreen/KundliForm
 import ChatScreen from '../../component/screen/ChatScreen/ChatScreen';
 import {
   ArrowLeft,
+  Bell,
   Home,
   Menu,
   MessageCircle,
+  Search,
+  Settings,
   Stars,
   User,
 } from 'lucide-react-native';
 import useSidebar from '../../store/useSidebar';
 import { useNavigation } from '@react-navigation/native';
+import { View } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,6 +46,13 @@ export default function BottomStackScreen() {
         tabBarStyle: {
           backgroundColor: 'white',
         },
+        headerRight: () => (
+          <View style={{ marginHorizontal: 16, flexDirection: 'row', gap: 16 }}>
+            <Bell size={24} />
+            <Settings size={24} />
+            <Search size={24} />
+          </View>
+        ),
       }}
     >
       <Tab.Screen

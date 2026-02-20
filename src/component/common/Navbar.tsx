@@ -7,11 +7,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import { BorderColor, LightColors } from '../../constant/colors';
-
-const tabs = ['Home', 'Kundli', 'Chat', 'Profile', 'Reports', 'Wallet'];
+import { tabs } from '../../constant/string';
 
 const HorizontalNavbar = () => {
-  const [activeTab, setActiveTab] = useState('Home');
+  const [activeTab, setActiveTab] = useState(tabs[0]);
 
   return (
     <View style={styles.container}>
@@ -43,7 +42,7 @@ export default HorizontalNavbar;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: LightColors.background,
-    paddingVertical: 10,
+    paddingVertical: 8,
     height: '7%',
   },
   scrollContainer: {
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 16,
     color: LightColors.textPrimary,
-    fontWeight: '500',
+    fontWeight: '600' as const,
   },
   activeText: {
     color: LightColors.primary,
