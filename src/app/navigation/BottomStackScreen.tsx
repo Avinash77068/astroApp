@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { TouchableOpacity } from 'react-native';
 import ProfileScreen from '../../component/screen/ProfileScreen';
 import HomeScreen from '../../component/screen/HomeScreen';
 import KundliFormScreen from '../../component/screen/KundliFormScreen';
@@ -10,20 +11,21 @@ import {
   MessageCircle,
   Stars,
   User,
-  View,
 } from 'lucide-react-native';
-
+import useSidebar from '../../component/hook/useSidebar';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomStackScreen() {
+  const { toggleSidebar } = useSidebar();
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: true,
-        headerLeft: () => (
-          <ArrowLeft size={24} style={{ marginHorizontal: 16 }} />
-        ),
+        headerLeft: () => <ArrowLeft size={24} style={{ marginHorizontal: 16 }} onPress={() => navigation.goBack()} />,
         headerStyle: {
           backgroundColor: 'white',
         },
@@ -41,7 +43,11 @@ export default function BottomStackScreen() {
         component={HomeScreen}
         options={{
           tabBarIcon: () => <Home />,
-          headerLeft: () => <Menu size={24} style={{ marginHorizontal: 16 }} />,
+          headerLeft: () => (
+            <TouchableOpacity onPress={toggleSidebar} style={{ marginHorizontal: 16 }}>
+              <Menu size={24} />
+            </TouchableOpacity>
+          ),
         }}
       />
       <Tab.Screen
