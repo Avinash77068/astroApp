@@ -1,9 +1,10 @@
 
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import useSidebar from '../../../store/useSidebar';
 import Sidebar from '../../common/Sidebar';
-
+import { styles } from './HomeScreenCss';
+import HorizontalNavbar from '../../common/Navbar';
 
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
@@ -11,24 +12,14 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text>✨ Daily Horoscope</Text>
+        <HorizontalNavbar />
       </View>
 
       {isSidebarOpen && <Sidebar />}
+
     </View>
   );
 };
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

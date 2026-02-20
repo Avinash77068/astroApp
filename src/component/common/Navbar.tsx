@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import { BorderColor, LightColors } from '../../constant/colors';
 
 const tabs = ['Home', 'Kundli', 'Chat', 'Profile', 'Reports', 'Wallet'];
 
@@ -41,28 +42,30 @@ export default HorizontalNavbar;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: LightColors.background,
     paddingVertical: 10,
+    height: '7%',
   },
   scrollContainer: {
     paddingHorizontal: 12,
   },
   tab: {
-    paddingHorizontal: 18,
+    paddingHorizontal: 5,
     paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: '#F1F1F1',
-    marginRight: 10,
+    marginHorizontal: 15,
   },
   activeTab: {
-    backgroundColor: '#7C3AED',
+    borderColor: BorderColor.primary,
+    borderWidth: 2,
+    color: LightColors.primary,
+    borderBottomColor: LightColors.primary,
   },
   tabText: {
-    fontSize: 14,
-    color: '#333',
+    fontSize: 16,
+    color: LightColors.textPrimary,
     fontWeight: '500',
   },
   activeText: {
-    color: '#fff',
+    color: LightColors.primary,
   },
 });

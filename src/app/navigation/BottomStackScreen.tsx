@@ -25,7 +25,13 @@ export default function BottomStackScreen() {
     <Tab.Navigator
       screenOptions={{
         headerShown: true,
-        headerLeft: () => <ArrowLeft size={24} style={{ marginHorizontal: 16 }} onPress={() => navigation.goBack()} />,
+        headerLeft: () => (
+          <ArrowLeft
+            size={24}
+            style={{ marginHorizontal: 16 }}
+            onPress={() => navigation.goBack()}
+          />
+        ),
         headerStyle: {
           backgroundColor: 'white',
         },
@@ -44,10 +50,14 @@ export default function BottomStackScreen() {
         options={{
           tabBarIcon: () => <Home />,
           headerLeft: () => (
-            <TouchableOpacity onPress={toggleSidebar} style={{ marginHorizontal: 16 }}>
+            <TouchableOpacity
+              onPress={toggleSidebar}
+              style={{ marginHorizontal: 16 }}
+            >
               <Menu size={24} />
             </TouchableOpacity>
           ),
+          headerTitle: 'Astro Guru',
         }}
       />
       <Tab.Screen
