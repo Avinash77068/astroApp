@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Sidebar from '../common/Sidebar';
-import useSidebar from '../../store/useSidebar';
+import useSidebar from '../../../store/useSidebar';
+import Sidebar from '../../common/Sidebar';
+
 
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();

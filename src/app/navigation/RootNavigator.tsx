@@ -1,6 +1,6 @@
 import React from 'react';
 import BottomStackScreen from './BottomStackScreen';
-import LoginScreen from '../../component/screen/LoginScreen';
+import LoginScreen from '../../component/screen/LoginScreen/LoginScreen';
 
 const isLogin = true;
 
