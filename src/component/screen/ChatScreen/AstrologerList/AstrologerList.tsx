@@ -15,8 +15,8 @@ interface Astrologer {
   expertise: string;
   experience: string;
   price: string;
-  isOnline: boolean;
-  isLive: boolean;
+  status: number;
+  isLive: number;
 }
 
 interface Props {
@@ -30,11 +30,23 @@ const AstrologerList: React.FC<Props> = ({ data, onChatPress }) => {
       {/* Profile Section */}
       <View style={AstrologerListstyles.leftSection}>
         <View>
-          <Image source={{ uri: item.image }} style={AstrologerListstyles.avatar} />
+          <Image
+            source={{ uri: item.image }}
+            style={AstrologerListstyles.avatar}
+          />
           <View
             style={[
               AstrologerListstyles.statusDot,
-              { backgroundColor: item.isOnline ? '#2ECC71' : '#BDC3C7' },
+              {
+                backgroundColor:
+                  item.status === 1
+                    ? '#FF7A18'
+                    : item.status === 2
+                    ? '#FFD700'
+                    : item.status === 3
+                    ? '#2ECC71'
+                    : '#D3D3D3',
+              },
             ]}
           />
         </View>
@@ -52,13 +64,28 @@ const AstrologerList: React.FC<Props> = ({ data, onChatPress }) => {
       <TouchableOpacity
         style={[
           AstrologerListstyles.chatBtn,
-          { backgroundColor: item.isOnline ? '#FF7A18' : '#D3D3D3' },
+          {
+            backgroundColor:
+              item.status === 1
+                ? '#FF7A18'
+                : item.status === 2
+                ? '#FFD700'
+                : item.status === 3
+                ? '#2ECC71'
+                : '#D3D3D3',
+          },
         ]}
-        disabled={!item.isOnline}
+        disabled={item.status !== 3}
         onPress={() => onChatPress?.(item)}
       >
         <Text style={AstrologerListstyles.chatText}>
-          {item.isOnline ? 'Chat Now' : 'Offline'}
+          {item.status === 1
+            ? 'Chat Now'
+            : item.status === 2
+            ? 'Busy'
+            : item.status === 3
+            ? 'Online'
+            : 'Offline'}
         </Text>
       </TouchableOpacity>
     </View>
