@@ -8,9 +8,12 @@ import {
 } from 'react-native';
 import { BorderColor, LightColors } from '../../constant/colors';
 import { tabs } from '../../constant/string';
+import { useHomepageStore } from '../../hooks/useHomepage';
 
 const HorizontalNavbar = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
+  const { data } = useHomepageStore();
+  console.log('Store data:', data);
 
   return (
     <View style={styles.container}>
