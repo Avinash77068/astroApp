@@ -3,8 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, Image } from 'react-native';
 
 import BottomStackScreen from './BottomStackScreen';
-import ChatWithAstrologer from '../../component/screen/ChatScreen/ChatScreen/ChatWithAstrologer';
 import { useActiveChat } from '../../store/useActiveChat';
+import { PhoneCall, VideoIcon } from 'lucide-react-native';
+import ChatWithAstrologer from '../../component/screen/ChatScreen/ChatScreen/ChatWithAstrologer';
 import { activeUser } from '../../component/screen/HomeScreen/astrologerList/types';
 
 export type AppStackParamList = {
@@ -49,6 +50,19 @@ export default function AppStackScreen() {
                 </Text>
                 <Text style={{ fontSize: 12, color: 'green' }}>Online</Text>
               </View>
+            </View>
+          ),
+          headerRight: () => (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 16,
+                opacity: 0.3,
+              }}
+            >
+              <PhoneCall />
+              <VideoIcon />
             </View>
           ),
         }}
