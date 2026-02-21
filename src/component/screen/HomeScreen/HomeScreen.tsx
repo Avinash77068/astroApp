@@ -13,6 +13,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <View style={styles.content}>
         <HorizontalNavbar />
+        <Text style={styles.text}>HomeScreen</Text>
       </View>
 
       {isSidebarOpen && <Sidebar />}
