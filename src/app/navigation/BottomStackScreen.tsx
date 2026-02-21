@@ -14,6 +14,7 @@ import {
   Settings,
   Stars,
   User,
+  Wallet,
 } from 'lucide-react-native';
 import useSidebar from '../../store/useSidebar';
 import { View } from 'react-native';
@@ -65,8 +66,7 @@ export default function BottomStackScreen() {
         headerRight: () => (
           <View style={{ marginHorizontal: 16, flexDirection: 'row', gap: 16 }}>
             <Bell size={24} />
-            <Settings size={24} />
-            <Search size={24} />
+            <Wallet size={24}/>
           </View>
         ),
       })}

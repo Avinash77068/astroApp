@@ -11,14 +11,15 @@ import { Buttonstyles } from './ButtonCss';
 type Variant = 'primary' | 'secondary' | 'outline' | 'danger';
 
 interface ButtonProps {
-  title: string;
-  onPress: () => void;
+  title?: string;
+  onPress?: () => void;
   variant?: Variant;
   loading?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  children?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -30,6 +31,7 @@ const Button: React.FC<ButtonProps> = ({
   fullWidth = true,
   style,
   textStyle,
+  children,
 }) => {
   const isDisabled = disabled || loading;
 
@@ -59,6 +61,7 @@ const Button: React.FC<ButtonProps> = ({
           {title}
         </Text>
       )}
+      {children}
     </TouchableOpacity>
   );
 };

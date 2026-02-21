@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import useSidebar from '../../../store/useSidebar';
@@ -15,7 +14,8 @@ import AstroFeatureGrid from './FeatureDashboard/AstroFeatureGrid';
 import featuresList from '../../../data/featuresList';
 import Button from '../../customComponent/Button';
 import { useNavigation } from '@react-navigation/native';
-
+import { MessageCircle, PhoneCall } from 'lucide-react-native';
+import { LightColors } from '../../../constant/colors';
 
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
@@ -27,9 +27,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <View style={styles.content}>
         <SearchBar value="" onChangeText={() => {}} />
-        <AstroLogerList
-          data={astroLogerList}
-        />
+        <AstroLogerList data={astroLogerList} />
         <FirstChatFreeBanner onPress={() => {}} />
         <AstroFeatureGrid
           data={featuresList}
@@ -37,17 +35,31 @@ const HomeScreen = () => {
         />
         <View style={styles.buttonContainer}>
           <Button
-            title="Get Started"
+            title="Call"
             onPress={() => {}}
             variant="primary"
             fullWidth={false}
-          />
+            style={{
+              flexDirection: 'row',
+              gap: 8,
+              backgroundColor: LightColors.secondary,
+            }}
+          >
+            <PhoneCall size={20} color="#fff" />
+          </Button>
           <Button
-            title="Get Started"
             onPress={() => {}}
             variant="primary"
             fullWidth={false}
-          />
+            title="Free Chat"
+            style={{
+              flexDirection: 'row',
+              gap: 8,
+              backgroundColor: LightColors.gradient,
+            }}
+          >
+            <MessageCircle size={20} color="#fff" />
+          </Button>
         </View>
       </View>
 
@@ -57,4 +69,3 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
-
