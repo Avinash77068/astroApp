@@ -1,4 +1,4 @@
-const liveUsers = [
+const astroLogerList = [
   {
     id: '1',
     name: 'Priyanka Gupta',
@@ -43,4 +43,4 @@ const liveUsers = [
   },
 ];
 
-export default liveUsers;
+export default astroLogerList;

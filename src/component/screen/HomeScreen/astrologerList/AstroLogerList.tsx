@@ -43,6 +43,7 @@ const AstroLogerList: React.FC<Props> = ({ data, onPress }) => {
       keyExtractor={item => item.id}
       renderItem={renderItem}
       contentContainerStyle={AstroLogerListStyles.container}
+      style={{ flexGrow: 0 }}
     />
   );
 };

@@ -8,8 +8,13 @@ import { useHomepage } from '../../../hooks/useHomepage';
 import { useAstroLoger } from '../../../hooks/useAstroLoger';
 import SearchBar from '../../customComponent/SearchBar';
 import AstroLogerList from './astrologerList/AstroLogerList';
-import liveUsers from '../../../data/liveUsers';
+
 import FirstChatFreeBanner from './Banner/FirstChatFreeBanner';
+import astroLogerList from '../../../data/astroLogerList';
+import AstroFeatureGrid from './FeatureDashboard/AstroFeatureGrid';
+import featuresList from '../../../data/featuresList';
+import Button from '../../customComponent/Button';
+
 
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
@@ -20,8 +25,26 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <View style={styles.content}>
         <SearchBar value="" onChangeText={() => {}} />
-        <AstroLogerList data={liveUsers} />
+        <AstroLogerList data={astroLogerList} />
         <FirstChatFreeBanner onPress={() => {}} />
+        <AstroFeatureGrid
+          data={featuresList}
+          onPress={item => console.log(item.title)}
+        />
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Get Started"
+            onPress={() => {}}
+            variant="primary"
+            fullWidth={false}
+          />
+          <Button
+            title="Get Started"
+            onPress={() => {}}
+            variant="primary"
+            fullWidth={false}
+          />
+        </View>
       </View>
 
       {isSidebarOpen && <Sidebar />}

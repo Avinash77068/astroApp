@@ -1,72 +1,33 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-
+import { TouchableOpacity, Image, Text } from 'react-native';
+const freeBannerImage = require('../../../../../assets/firstChatFreeBanner.png');
 interface Props {
   onPress?: () => void;
 }
 
 const FirstChatFreeBanner: React.FC<Props> = ({ onPress }) => {
   return (
-    <TouchableOpacity activeOpacity={0.9} onPress={onPress}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={onPress}
+      style={{
+        width: '100%',
+        flexDirection: 'row',
+        paddingVertical: '5%',
+        overflow: 'hidden',
+      }}
+    >
       <Image
-        source={require('./assets/firstChatFreeBanner.png')}
-        style={{ width: '100%', height: 100 }}
+        source={freeBannerImage}
+        style={{
+          width: '100%',
+          height: 125,
+          overflow: 'hidden',
+        }}
+        resizeMode="cover"
       />
     </TouchableOpacity>
   );
 };
 
 export default FirstChatFreeBanner;
-
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 16,
-    marginVertical: 12,
-    padding: 16,
-    borderRadius: 18,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
-  leftSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-
-  iconCircle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-
-  title: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#fff',
-  },
-
-  subtitle: {
-    fontSize: 12,
-    color: '#FFEFEF',
-    marginTop: 4,
-  },
-
-  cta: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-
-  ctaText: {
-    color: '#FF3C3C',
-    fontWeight: '600',
-    fontSize: 13,
-  },
-});

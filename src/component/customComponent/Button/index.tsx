@@ -41,7 +41,7 @@ const Button: React.FC<ButtonProps> = ({
       style={[
         Buttonstyles.base,
         Buttonstyles[variant],
-        fullWidth && { width: '100%' },
+        fullWidth ? { width: '100%' } : {width:"50%"},
         isDisabled && Buttonstyles.disabled,
         style,
       ]}
