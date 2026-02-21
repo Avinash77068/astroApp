@@ -35,19 +35,21 @@ type RouteParams = {
   };
 };
 
-const ChatScreen = () => {
+const ChatWithAstrologer = () => {
   const route = useRoute<RouteProp<RouteParams, 'ChatWithAstrologer'>>();
   const astrologer = route.params?.astrologer;
   const { setActiveChat } = useActiveChat();
   useEffect(() => {
-    // setActiveChat(astrologer);
-    console.log('astrologer', astrologer);
+    if (astrologer) {
+      setActiveChat(astrologer);
+      console.log('astrologer', astrologer);
+    }
   }, [astrologer, setActiveChat]);
 
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: astrologer 
+      text: astrologer
         ? `Namaste 🙏 I'm ${astrologer.name}. How can I guide you today?`
         : 'Namaste 🙏 How can I guide you today?',
       sender: 'astrologer',
@@ -109,11 +111,6 @@ const ChatScreen = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={80}
     >
-      <View style={{ padding: 16 }}>
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-          {astrologer?.name || 'Astrologer'}
-        </Text>
-      </View>
       <FlatList
         ref={flatListRef}
         data={messages}
@@ -139,7 +136,7 @@ const ChatScreen = () => {
   );
 };
 
-export default ChatScreen;
+export default ChatWithAstrologer;
 
 const styles = StyleSheet.create({
   container: {

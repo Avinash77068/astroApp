@@ -37,7 +37,7 @@ const astroLogerList = [
     expertise: 'Numerology • Palmistry',
     experience: '5 yrs exp',
     price: '18',
-    isOnline: false,
+    isOnline: true,
   },
   {
     id: '5',

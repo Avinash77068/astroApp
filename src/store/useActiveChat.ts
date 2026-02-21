@@ -1,11 +1,24 @@
 import { create } from 'zustand';
 
+interface Astrologer {
+  id: string;
+  name: string;
+  image: string;
+  expertise: string;
+  experience: string;
+  price: string;
+  isOnline: boolean;
+  isLive: boolean;
+}
+
 interface ActiveChatState {
-  activeChat: string | null | any;
-  setActiveChat: (chatId: string) => void;
+  activeChat: Astrologer | null;
+  setActiveChat: (astrologer: Astrologer) => void;
+  clearActiveChat: () => void;
 }
 
 export const useActiveChat = create<ActiveChatState>((set) => ({
   activeChat: null,
-  setActiveChat: (chatId: string) => set({ activeChat: chatId }),
+  setActiveChat: (astrologer: Astrologer) => set({ activeChat: astrologer }),
+  clearActiveChat: () => set({ activeChat: null }),
 }));

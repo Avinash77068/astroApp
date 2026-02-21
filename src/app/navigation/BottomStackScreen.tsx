@@ -33,7 +33,7 @@ export default function BottomStackScreen() {
           <ArrowLeft
             size={24}
             style={{ marginHorizontal: 16 }}
-            onPress={() => navigation.goBack()}
+            onPress={() => { }}
           />
         ),
         headerStyle: {
