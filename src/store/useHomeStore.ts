@@ -1,3 +1,4 @@
+import { create } from 'zustand';
 // Properly typed Zustand store
 interface HomepageState {
   data: any | null;
@@ -8,13 +9,11 @@ interface HomepageState {
   setIsError: (isError: boolean) => void;
 }
 
-import { create } from 'zustand';
-
 export const useHomepageStore = create<HomepageState>(set => ({
-    data: null,
-    isLoading: false,
-    isError: false,
-    setData: (data: any) => set({ data }),
-    setIsLoading: (isLoading: boolean) => set({ isLoading }),
-    setIsError: (isError: boolean) => set({ isError }),
+  data: null,
+  isLoading: false,
+  isError: false,
+  setData: (data: any) => set({ data }),
+  setIsLoading: (isLoading: boolean) => set({ isLoading }),
+  setIsError: (isError: boolean) => set({ isError }),
 }));

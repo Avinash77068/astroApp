@@ -6,10 +6,12 @@ import Sidebar from '../../common/Sidebar';
 import { styles } from './HomeScreenCss';
 import HorizontalNavbar from '../../common/Navbar';
 import { useHomepage } from '../../../hooks/useHomepage';
+import { useAstroLoger } from '../../../hooks/useAstroLoger';
 
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
   useHomepage();
+  useAstroLoger();
 
   return (
     <View style={styles.container}>

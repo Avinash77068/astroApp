@@ -1,16 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
+import { astroLoger } from '../app/services';
 import { useEffect } from 'react';
-import { fetchHomepage } from '../app/services';
-import { useHomepageStore } from '../store/useHomeStore';
+import { useAstroLogerStore } from '../store/useAstroLogerStore';
 
-export const useHomepage = () => {
-  const setData = useHomepageStore((state: any) => state.setData);
-
+export const useAstroLoger = () => {
+  const setAstroLogerData = useAstroLogerStore((state: any) => state.setAstroLogerData);
   const query = useQuery({
-    // query key
-    queryKey: ['homepage'],
+    queryKey: ['astrologer'],
     // api call
-    queryFn: () => fetchHomepage({ endpoint: '/homepage' }),
+    queryFn: () => astroLoger({ endpoint: '/astrologer' }),
     // enable query
     enabled: true,
     // ✅ 5 minutes tak fresh mana jayega
@@ -24,14 +22,12 @@ export const useHomepage = () => {
     // 🔄 Refetch when network reconnects
     refetchOnReconnect: false,
   });
-
   useEffect(() => {
-    if (query.data) {
-      setData(query.data);
+    if (query?.data) {
+      setAstroLogerData(query?.data.data);
     }
-  }, [query.data, setData]);
-
+  }, [query, setAstroLogerData]);
   return query;
 };
+export { useAstroLogerStore };
 
-export { useHomepageStore };

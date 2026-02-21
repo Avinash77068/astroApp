@@ -9,11 +9,14 @@ import {
 import { BorderColor, LightColors } from '../../constant/colors';
 import { tabs } from '../../constant/string';
 import { useHomepageStore } from '../../hooks/useHomepage';
+import { useAstroLoger } from '../../hooks/useAstroLoger';
 
 const HorizontalNavbar = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
-  const { data } = useHomepageStore();
-  console.log('Store data:', data);
+  const { data: homepageData } = useHomepageStore();
+  const { data: astrologersData } = useAstroLoger();
+  console.log('Store data:', homepageData);
+  console.log('Astrologers data:', astrologersData);
 
   return (
     <View style={styles.container}>
@@ -22,7 +25,7 @@ const HorizontalNavbar = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}
       >
-        {tabs.map(tab => (
+        {homepageData?.homeTabs?.map((tab: string) => (
           <TouchableOpacity
             key={tab}
             style={[styles.tab, activeTab === tab && styles.activeTab]}
