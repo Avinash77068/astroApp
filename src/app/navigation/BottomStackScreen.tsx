@@ -16,26 +16,42 @@ import {
   User,
 } from 'lucide-react-native';
 import useSidebar from '../../store/useSidebar';
-import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomStackScreen() {
   const { toggleSidebar } = useSidebar();
-  const navigation = useNavigation();
 
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ navigation, route }) => ({
         headerShown: true,
-        headerLeft: () => (
-          <ArrowLeft
-            size={24}
-            style={{ marginHorizontal: 16 }}
-            onPress={() => { }}
-          />
-        ),
+        headerLeft: () => {
+          if (route.name === 'Home') {
+            return (
+              <TouchableOpacity
+                onPress={toggleSidebar}
+                style={{ marginHorizontal: 16 }}
+              >
+                <Menu size={24} />
+              </TouchableOpacity>
+            );
+          }
+
+          if (!navigation.canGoBack()) {
+            return null;
+          }
+
+          return (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{ marginHorizontal: 16 }}
+            >
+              <ArrowLeft size={24} />
+            </TouchableOpacity>
+          );
+        },
         headerStyle: {
           backgroundColor: 'white',
         },
@@ -53,21 +69,13 @@ export default function BottomStackScreen() {
             <Search size={24} />
           </View>
         ),
-      }}
+      })}
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
           tabBarIcon: () => <Home />,
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={toggleSidebar}
-              style={{ marginHorizontal: 16 }}
-            >
-              <Menu size={24} />
-            </TouchableOpacity>
-          ),
           headerTitle: 'Astro Guru',
         }}
       />
