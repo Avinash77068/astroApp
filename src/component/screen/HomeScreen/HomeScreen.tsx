@@ -14,18 +14,22 @@ import astroLogerList from '../../../data/astroLogerList';
 import AstroFeatureGrid from './FeatureDashboard/AstroFeatureGrid';
 import featuresList from '../../../data/featuresList';
 import Button from '../../customComponent/Button';
+import { useNavigation } from '@react-navigation/native';
 
 
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
   useHomepage();
   useAstroLoger();
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <SearchBar value="" onChangeText={() => {}} />
-        <AstroLogerList data={astroLogerList} />
+        <AstroLogerList
+          data={astroLogerList}
+        />
         <FirstChatFreeBanner onPress={() => {}} />
         <AstroFeatureGrid
           data={featuresList}

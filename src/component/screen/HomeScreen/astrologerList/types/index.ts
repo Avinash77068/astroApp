@@ -1,4 +1,4 @@
-export interface LiveUser {
+export interface activeUser {
   id: string;
   name: string;
   image: string;
@@ -6,6 +6,6 @@ export interface LiveUser {
 }
 
 export interface Props {
-  data: LiveUser[];
-  onPress?: (item: LiveUser) => void;
+  data: activeUser[];
+  onPress?: (item: activeUser) => void;
 }

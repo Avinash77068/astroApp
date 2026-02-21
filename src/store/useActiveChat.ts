@@ -1,24 +1,14 @@
 import { create } from 'zustand';
-
-interface Astrologer {
-  id: string;
-  name: string;
-  image: string;
-  expertise: string;
-  experience: string;
-  price: string;
-  isOnline: boolean;
-  isLive: boolean;
-}
+import { activeUser } from '../component/screen/HomeScreen/astrologerList/types';
 
 interface ActiveChatState {
-  activeChat: Astrologer | null;
-  setActiveChat: (astrologer: Astrologer) => void;
+  activeChat: activeUser | null;
+  setActiveChat: (astrologer: activeUser) => void;
   clearActiveChat: () => void;
 }
 
 export const useActiveChat = create<ActiveChatState>((set) => ({
   activeChat: null,
-  setActiveChat: (astrologer: Astrologer) => set({ activeChat: astrologer }),
+  setActiveChat: (astrologer: activeUser) => set({ activeChat: astrologer }),
   clearActiveChat: () => set({ activeChat: null }),
 }));

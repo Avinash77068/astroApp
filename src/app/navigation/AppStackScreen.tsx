@@ -5,8 +5,14 @@ import { View, Text, Image } from 'react-native';
 import BottomStackScreen from './BottomStackScreen';
 import ChatWithAstrologer from '../../component/screen/ChatScreen/ChatScreen/ChatWithAstrologer';
 import { useActiveChat } from '../../store/useActiveChat';
+import { activeUser } from '../../component/screen/HomeScreen/astrologerList/types';
 
-const Stack = createNativeStackNavigator();
+export type AppStackParamList = {
+  BottomStack: undefined;
+  ChatWithAstrologer: { astrologer: activeUser };
+};
+
+const Stack = createNativeStackNavigator<AppStackParamList>();
 
 export default function AppStackScreen() {
   const { activeChat } = useActiveChat();

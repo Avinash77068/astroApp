@@ -8,16 +8,23 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { AstroLogerListStyles } from './AstroLogerListCss';
-import { LiveUser, Props } from './types';
+import { activeUser, Props } from './types';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AppStackParamList } from '../../../../app/navigation/AppStackScreen';
 
-const AstroLogerList: React.FC<Props> = ({ data, onPress }) => {
-  const renderItem = ({ item }: { item: LiveUser }) => (
+const AstroLogerList: React.FC<Props> = ({ data }) => {
+  const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
+  
+  const renderItem = ({ item }: { item: activeUser }) => (
     <TouchableOpacity
       style={AstroLogerListStyles.itemContainer}
-      onPress={() => onPress?.(item)}
+      onPress={() =>
+        navigation.navigate('ChatWithAstrologer', { astrologer: item })
+      }
     >
       <View style={AstroLogerListStyles.avatarWrapper}>
-        <View style={ AstroLogerListStyles.gradientBorder}>
+        <View style={AstroLogerListStyles.gradientBorder}>
           <Image source={{ uri: item.image }} style={AstroLogerListStyles.avatar} />
         </View>
 

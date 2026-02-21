@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { useActiveChat } from '../../../../store/useActiveChat';
+import { AppStackParamList } from '../../../../app/navigation/AppStackScreen';
+import { activeUser } from '../../../../component/screen/HomeScreen/astrologerList/types';
 
 interface Message {
   id: string;
@@ -18,25 +20,8 @@ interface Message {
   sender: 'user' | 'astrologer';
 }
 
-interface Astrologer {
-  id: string;
-  name: string;
-  image: string;
-  expertise: string;
-  experience: string;
-  price: string;
-  isOnline: boolean;
-  isLive: boolean;
-}
-
-type RouteParams = {
-  ChatWithAstrologer: {
-    astrologer?: Astrologer;
-  };
-};
-
 const ChatWithAstrologer = () => {
-  const route = useRoute<RouteProp<RouteParams, 'ChatWithAstrologer'>>();
+  const route = useRoute<RouteProp<AppStackParamList, 'ChatWithAstrologer'>>();
   const astrologer = route.params?.astrologer;
   const { setActiveChat } = useActiveChat();
   useEffect(() => {
