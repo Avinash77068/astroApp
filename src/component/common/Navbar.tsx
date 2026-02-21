@@ -43,9 +43,11 @@ export default HorizontalNavbar;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: LightColors.background,
+    backgroundColor: LightColors.graybackground,
     paddingVertical: 8,
     height: '7%',
+    borderBottomWidth: 1,
+    borderBottomColor: BorderColor.primary,
   },
   scrollContainer: {
     paddingHorizontal: 12,

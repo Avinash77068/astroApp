@@ -1,6 +1,5 @@
-// src/theme.ts
-
 import { useColorScheme } from 'react-native';
+import { useHomepageStore } from '../store/useHomeStore';
 
 /* ===============================
    🎨 COLORS
@@ -10,6 +9,8 @@ export const LightColors = {
   primary: '#7C3AED', // Astro Purple
   secondary: '#F59E0B', // Golden
   background: '#FFFFFF',
+  gradient: '#7C3AED',
+  graybackground: '#F5F5F5',
   surface: '#F8F9FC',
   textPrimary: '#111827',
   textSecondary: '#6B7280',
@@ -20,7 +21,7 @@ export const LightColors = {
   buttonText: '#FFFFFF',
 };
 export const BorderColor = {
-  primary: '#FFFFFF',
+  primary: 'transparent',
   secondary: '#E5E7EB',
 };
 
@@ -74,5 +75,20 @@ export const useAppTheme = () => {
     colors,
     typography: Typography,
     spacing: Spacing,
+  };
+};
+
+/* ===============================
+   🎨 USE COLORS HOOK (API BOUND)
+=================================*/
+
+export const useColors = () => {
+  const { data } = useHomepageStore();
+  const apiColors = data?.appConfig?.constants?.COLORS;
+
+  return {
+    LightColors: apiColors || LightColors,
+    DarkColors,
+    BorderColor,
   };
 };
