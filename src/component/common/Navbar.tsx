@@ -6,17 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { BorderColor, LightColors } from '../../constant/colors';
-import { tabs } from '../../constant/string';
+
 import { useHomepageStore } from '../../hooks/useHomepage';
-import { useAstroLoger } from '../../hooks/useAstroLoger';
+import { BorderColor, LightColors } from '../../constant/colors';
 
 const HorizontalNavbar = () => {
-  const [activeTab, setActiveTab] = useState(tabs[0]);
   const { data: homepageData } = useHomepageStore();
-  const { data: astrologersData } = useAstroLoger();
-  console.log('Store data:', homepageData);
-  console.log('Astrologers data:', astrologersData);
+  const [activeTab, setActiveTab] = useState(homepageData?.homeTabs[0]);
 
   return (
     <View style={styles.container}>

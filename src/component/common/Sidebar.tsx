@@ -5,7 +5,6 @@ import { DarkColors } from '../../constant/colors';
 
 const Sidebar = () => {
   const { closeSidebar } = useSidebar();
-
   return (
     <>
       {/* Overlay (Outside Click) */}
@@ -14,7 +13,6 @@ const Sidebar = () => {
         activeOpacity={1}
         onPress={closeSidebar}
       />
-
       {/* Sidebar Panel */}
       <View style={styles.sidebar}>
         <Text style={styles.sidebarItem}>🏠 Home</Text>
