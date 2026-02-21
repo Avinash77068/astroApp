@@ -6,7 +6,7 @@ import { styles } from './HomeScreenCss';
 import { useHomepage } from '../../../hooks/useHomepage';
 import { useAstroLoger } from '../../../hooks/useAstroLoger';
 import SearchBar from '../../customComponent/SearchBar';
-import AstroLogerList from './astrologerList/AstroLogerList';
+import AstroLogerList from './astrologerList/LiveAstroLogerList';
 
 import FirstChatFreeBanner from './Banner/FirstChatFreeBanner';
 import astroLogerList from '../../../data/astroLogerList';
@@ -16,6 +16,7 @@ import Button from '../../customComponent/Button';
 import { useNavigation } from '@react-navigation/native';
 import { MessageCircle, PhoneCall } from 'lucide-react-native';
 import { LightColors } from '../../../constant/colors';
+import LiveAstroLogerList from './astrologerList/LiveAstroLogerList';
 
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
@@ -27,7 +28,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <View style={styles.content}>
         <SearchBar value="" onChangeText={() => {}} />
-        <AstroLogerList data={astroLogerList} />
+        <LiveAstroLogerList data={astroLogerList} />
         <FirstChatFreeBanner onPress={() => {}} />
         <AstroFeatureGrid
           data={featuresList}

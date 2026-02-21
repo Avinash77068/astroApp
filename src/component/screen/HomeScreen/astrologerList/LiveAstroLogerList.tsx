@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { AstroLogerListStyles } from './AstroLogerListCss';
+import { AstroLogerListStyles } from './LiveAstroLogerList';
 import { activeUser, Props } from './types';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
