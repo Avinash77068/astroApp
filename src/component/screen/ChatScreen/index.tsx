@@ -5,9 +5,18 @@ import SearchBar from '../../customComponent/SearchBar';
 import astroLogerList from '../../../data/astroLogerList';
 import AstrologerList from './AstrologerList/AstrologerList';
 import AstrologerFilterSheet from './AstrologerList/AstrologerFilterSheet';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 const ChatScreen = () => {
   const [openFilterSheet, setOpenFilterSheet] = useState(false);
+  const navigation = useNavigation<any>();
+  
+  const handleChatPress = (item: any) => {
+    const parentNav = navigation.getParent();
+    if (parentNav) {
+      parentNav.navigate('ChatWithAstrologer', { astrologer: item });
+    }
+  };
   return (
     <View
       style={{
@@ -34,7 +43,7 @@ const ChatScreen = () => {
       )}
       <AstrologerList
         data={astroLogerList}
-        onChatPress={item => console.log('Chat with', item.name)}
+        onChatPress={handleChatPress}
       />
     </View>
   );

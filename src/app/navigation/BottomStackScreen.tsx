@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import ProfileScreen from '../../component/screen/ProfileScreen/ProfileScreen';
 import HomeScreen from '../../component/screen/HomeScreen/HomeScreen';
 import KundliFormScreen from '../../component/screen/KundliFormScreen/KundliFormScreen';
-import ChatScreen from '../../component/screen/ChatScreen/ChatScreen';
+import ChatScreen from '../../component/screen/ChatScreen';
 import {
   ArrowLeft,
   Bell,
