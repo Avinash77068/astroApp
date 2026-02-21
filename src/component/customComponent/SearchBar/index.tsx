@@ -4,8 +4,8 @@ import { Search, SlidersHorizontal } from 'lucide-react-native';
 import { SearchBarstyles } from './SearchBarCss';
 
 interface Props {
-  value: string;
-  onChangeText: (text: string) => void;
+  value?: string;
+  onChangeText?: (text: string) => void;
   onFilterPress?: () => void;
   placeholder?: string;
   containerStyle?: any;

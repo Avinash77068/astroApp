@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
     paddingHorizontal: 20,
+    paddingVertical: 20,
     width: '100%',
   }
 });
