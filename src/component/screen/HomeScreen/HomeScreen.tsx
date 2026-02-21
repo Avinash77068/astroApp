@@ -6,7 +6,6 @@ import { styles } from './HomeScreenCss';
 import { useHomepage } from '../../../hooks/useHomepage';
 import { useAstroLoger } from '../../../hooks/useAstroLoger';
 import SearchBar from '../../customComponent/SearchBar';
-import AstroLogerList from './astrologerList/LiveAstroLogerList';
 
 import FirstChatFreeBanner from './Banner/FirstChatFreeBanner';
 import astroLogerList from '../../../data/astroLogerList';

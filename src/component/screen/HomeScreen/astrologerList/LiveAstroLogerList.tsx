@@ -13,9 +13,10 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../../../../app/navigation/AppStackScreen';
 
-const AstroLogerList: React.FC<Props> = ({ data }) => {
-  const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
-  
+const LiveAstroLogerList: React.FC<Props> = ({ data }) => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppStackParamList>>();
+
   const renderItem = ({ item }: { item: activeUser }) => (
     <TouchableOpacity
       style={AstroLogerListStyles.itemContainer}
@@ -25,7 +26,10 @@ const AstroLogerList: React.FC<Props> = ({ data }) => {
     >
       <View style={AstroLogerListStyles.avatarWrapper}>
         <View style={AstroLogerListStyles.gradientBorder}>
-          <Image source={{ uri: item.image }} style={AstroLogerListStyles.avatar} />
+          <Image
+            source={{ uri: item.image }}
+            style={AstroLogerListStyles.avatar}
+          />
         </View>
 
         {item.isLive && (
@@ -55,5 +59,5 @@ const AstroLogerList: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default AstroLogerList;
+export default LiveAstroLogerList;
 

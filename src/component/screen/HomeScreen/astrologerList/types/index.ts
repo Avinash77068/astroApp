@@ -2,7 +2,7 @@ export interface activeUser {
   id: string;
   name: string;
   image: string;
-  isLive?: boolean;
+  isLive?: number;
 }
 
 export interface Props {
