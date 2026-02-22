@@ -7,11 +7,12 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { AstroLogerListStyles } from './LiveAstroLogerList';
+
 import { activeUser, Props } from './types';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../../../../app/navigation/AppStackScreen';
+import { AstroLogerListStyles } from './LiveAstroLogerListCss';
 
 const LiveAstroLogerList: React.FC<Props> = ({ data }) => {
   const navigation =

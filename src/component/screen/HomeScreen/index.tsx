@@ -17,6 +17,7 @@ import { MessageCircle, PhoneCall } from 'lucide-react-native';
 import { LightColors } from '../../../constant/colors';
 import LiveAstroLogerList from './astrologerList/LiveAstroLogerList';
 
+
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
   useHomepage();

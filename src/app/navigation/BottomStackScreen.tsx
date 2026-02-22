@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity } from 'react-native';
 import ProfileScreen from '../../component/screen/ProfileScreen/ProfileScreen';
-import HomeScreen from '../../component/screen/HomeScreen/HomeScreen';
+import HomeScreen from '../../component/screen/HomeScreen';
 import KundliFormScreen from '../../component/screen/KundliFormScreen/KundliFormScreen';
 import ChatScreen from '../../component/screen/ChatScreen';
 import {
