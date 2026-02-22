@@ -1,15 +1,26 @@
 // Simple API call function
 // const BaseUrl = 'https://astro-ai-backend-smoky.vercel.app/api';
-const BaseUrl = 'http://0.0.0.0:3000/';
+const BaseUrl = 'http://10.0.2.2:3000';
 
 export const fetchHomepage = async ({endpoint}: {endpoint: string}): Promise<any> => {
-  const response = await fetch(`${BaseUrl}/${endpoint}`);
-  const result = await response.json();
-  return result.data.data;
+  try {
+    const response = await fetch(`${BaseUrl}${endpoint}`);
+    const result = await response.json();
+    console.log('result', result);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
+
 export const astroLoger =async ({endpoint}: {endpoint: string}): Promise<any> => {
-  const response = await fetch(`${BaseUrl}/${endpoint}`);
-  const result = await response.json();
-  return result.data;
+  try {
+    const response = await fetch(`${BaseUrl}${endpoint}`);
+    const result = await response.json();
+    console.log('result', result);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
 };
