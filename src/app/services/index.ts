@@ -1,5 +1,6 @@
 // Simple API call function
-const BaseUrl = 'https://astro-ai-backend-smoky.vercel.app/api';
+// const BaseUrl = 'https://astro-ai-backend-smoky.vercel.app/api';
+const BaseUrl = 'http://0.0.0.0:3000/';
 
 export const fetchHomepage = async ({endpoint}: {endpoint: string}): Promise<any> => {
   const response = await fetch(`${BaseUrl}/${endpoint}`);
