@@ -12,12 +12,16 @@ import {
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { useActiveChat } from '../../../../store/useActiveChat';
 import { AppStackParamList } from '../../../../app/navigation/AppStackScreen';
-
-interface Message {
-  id: string;
-  text: string;
-  sender: 'user' | 'astrologer';
-}
+import MessageItem from './components/MessageItem';
+import {
+  Message,
+  createUserMessage,
+  createAstroMessage,
+  createTypingMessage,
+  createErrorMessage,
+  createInitialMessage,
+  sendChatMessage,
+} from './utils/chatUtils';
 
 const ChatWithAstrologer = () => {
   const route = useRoute<RouteProp<AppStackParamList, 'ChatWithAstrologer'>>();
@@ -31,63 +35,46 @@ const ChatWithAstrologer = () => {
   }, [astrologer, setActiveChat]);
 
   const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: astrologer
-        ? `Namaste 🙏 I'm ${astrologer.name}. How can I guide you today?`
-        : 'Namaste 🙏 How can I guide you today?',
-      sender: 'astrologer',
-    },
+    createInitialMessage(astrologer?.name),
   ]);
 
   const [input, setInput] = useState('');
   const flatListRef = useRef<FlatList>(null);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text: input,
-      sender: 'user',
-    };
+    const newMessage = createUserMessage(input);
+    const typingMessage = createTypingMessage();
 
-    setMessages(prev => [...prev, newMessage]);
+    setMessages(prev => [...prev, newMessage, typingMessage]);
     setInput('');
+
+    try {
+      const userChatResponse = await sendChatMessage(newMessage.text, astrologer?.id);
+      const data = userChatResponse;
+      const astroMessage = createAstroMessage(data.data?.astroResponse || 'Sorry, I could not understand.');
+      setMessages(prev => {
+        const filtered = prev.filter(m => m.id !== 'typing');
+        return [...filtered, astroMessage];
+      });
+    } catch (error) {
+      console.error('Error sending message:', error);
+      const errorMessage = createErrorMessage();
+      setMessages(prev => {
+        const filtered = prev.filter(m => m.id !== 'typing');
+        return [...filtered, errorMessage];
+      });
+    }
   };
 
   useEffect(() => {
     flatListRef.current?.scrollToEnd({ animated: true });
   }, [messages]);
 
-  const renderItem = ({ item }: { item: Message }) => {
-    const isUser = item.sender === 'user';
-
-    return (
-      <View
-        style={[
-          styles.messageContainer,
-          isUser ? styles.userAlign : styles.astroAlign,
-        ]}
-      >
-        <View
-          style={[
-            styles.bubble,
-            isUser ? styles.userBubble : styles.astroBubble,
-          ]}
-        >
-          <Text
-            style={[
-              styles.messageText,
-              isUser ? styles.userText : styles.astroText,
-            ]}
-          >
-            {item.text}
-          </Text>
-        </View>
-      </View>
-    );
-  };
+  const renderItem = ({ item }: { item: Message }) => (
+    <MessageItem item={item} />
+  );
 
   return (
     <KeyboardAvoidingView
