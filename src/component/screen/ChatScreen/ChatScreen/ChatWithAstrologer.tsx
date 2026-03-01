@@ -12,7 +12,6 @@ import {
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { useActiveChat } from '../../../../store/useActiveChat';
 import { AppStackParamList } from '../../../../app/navigation/AppStackScreen';
-import { activeUser } from '../../../../component/screen/HomeScreen/astrologerList/types';
 
 interface Message {
   id: string;
