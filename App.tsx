@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
-import RootNavigator from './src/app/navigation/RootNavigator';
-import { StatusBar, View, TouchableOpacity, Text } from 'react-native';
-import { StyleSheet } from 'react-native';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import NetworkLogger, {
-  startNetworkLogging,
-} from 'react-native-network-logger';
+/**
+ * App Entry Point
+ * Configures TanStack Query and renders RootNavigator
+ * RootNavigator handles authentication state routing
+ */
 
-const queryClient = new QueryClient();
+import React, { useState, useEffect } from 'react';
+import { StatusBar, View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import NetworkLogger, { startNetworkLogging } from 'react-native-network-logger';
+import { queryClient } from './src/config/queryClient';
+import { RootNavigator } from './src/app/navigation/RootNavigator';
+
 
 export default function App() {
   const [showLogger, setShowLogger] = useState(false);
@@ -23,27 +25,22 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
-        <NavigationContainer>
-          <View style={styles.container}>
-            <StatusBar barStyle="dark-content" />
-            <RootNavigator />
+        <View style={styles.container}>
+          <StatusBar barStyle="dark-content" />
+          <RootNavigator />
 
-            {/* Floating Debug Button */}
-            {__DEV__ && (
-              <TouchableOpacity
-                style={styles.floatingButton}
-                onPress={() => setShowLogger(prev => !prev)}
-              >
-                <Text style={styles.buttonText}>
-                  {showLogger ? 'Close Logs' : 'Logs'}
-                </Text>
-              </TouchableOpacity>
-            )}
+          {__DEV__ && (
+            <TouchableOpacity
+              style={styles.floatingButton}
+              onPress={() => setShowLogger(prev => !prev)}>
+              <Text style={styles.buttonText}>
+                {showLogger ? 'Close Logs' : 'Logs'}
+              </Text>
+            </TouchableOpacity>
+          )}
 
-            {/* Network Logger Overlay */}
-            {showLogger && <NetworkLogger />}
-          </View>
-        </NavigationContainer>
+          {showLogger && <NetworkLogger />}
+        </View>
       </SafeAreaProvider>
     </QueryClientProvider>
   );
