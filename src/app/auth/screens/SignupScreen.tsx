@@ -1,8 +1,3 @@
-/**
- * SignupScreen
- * User registration interface with validation
- * Uses TanStack Query for API calls, no business logic in component
- */
 
 import React, { useState } from 'react';
 import {
@@ -14,9 +9,10 @@ import {
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import {  Input } from '../../../component/customComponent/InputBox';
+import { Input } from '../../../component/customComponent/InputBox';
 import { useSignup } from '../../../hooks/useSignup';
 import Button from '../../../component/customComponent/Button';
+import { GradientWrapper } from '../../../component/customComponent/LinearGradient';
 
 type AuthStackParamList = {
   Login: undefined;
@@ -127,70 +123,67 @@ export const SignupScreen: React.FC = () => {
   };
 
   return (
-    <>
+    <GradientWrapper>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Sign up to get started</Text>
+        <View style={styles.topSection}>
+          <Text style={styles.brand}>Jobsly</Text>
         </View>
 
-        <View style={styles.form}>
+        {/* White Card */}
+        <View style={styles.card}>
+          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.subtitle}>Sign up to get started</Text>
+
           <Input
             label="Full Name"
             placeholder="Enter your name"
             value={name}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setName(text);
-              setErrors((prev) => ({ ...prev, name: '' }));
+              setErrors(prev => ({ ...prev, name: '' }));
             }}
             error={errors.name}
             autoCapitalize="words"
-            autoCorrect={false}
           />
 
           <Input
             label="Email"
             placeholder="Enter your email"
             value={email}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setEmail(text);
-              setErrors((prev) => ({ ...prev, email: '' }));
+              setErrors(prev => ({ ...prev, email: '' }));
             }}
             error={errors.email}
             keyboardType="email-address"
             autoCapitalize="none"
-            autoCorrect={false}
           />
 
           <Input
             label="Password"
             placeholder="Enter your password"
             value={password}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setPassword(text);
-              setErrors((prev) => ({ ...prev, password: '' }));
+              setErrors(prev => ({ ...prev, password: '' }));
             }}
             error={errors.password}
             secureTextEntry
-            autoCapitalize="none"
           />
 
           <Input
             label="Confirm Password"
             placeholder="Confirm your password"
             value={confirmPassword}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setConfirmPassword(text);
-              setErrors((prev) => ({ ...prev, confirmPassword: '' }));
+              setErrors(prev => ({ ...prev, confirmPassword: '' }));
             }}
             error={errors.confirmPassword}
             secureTextEntry
-            autoCapitalize="none"
           />
 
-          {error && (
-            <Text style={styles.errorMessage}>{error.message}</Text>
-          )}
+          {error && <Text style={styles.errorMessage}>{error.message}</Text>}
 
           <Button
             title="Sign Up"
@@ -207,54 +200,76 @@ export const SignupScreen: React.FC = () => {
           </View>
         </View>
       </View>
-    </>
+    </GradientWrapper>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
-    justifyContent: 'center',
   },
-  header: {
-    marginBottom: 40,
+
+  topSection: {
+    height: '30%',
+    justifyContent: 'center',
     alignItems: 'center',
   },
+
+  brand: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#fff',
+  },
+
+  card: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    padding: 24,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+  },
+
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
+    fontSize: 26,
+    fontWeight: '700',
+    color: '#222',
+    marginBottom: 6,
   },
+
   subtitle: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 14,
+    color: '#777',
+    marginBottom: 24,
   },
-  form: {
-    width: '100%',
-  },
+
   signupButton: {
-    marginTop: 8,
+    marginTop: 12,
   },
+
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 24,
+    marginTop: 20,
   },
+
   footerText: {
     fontSize: 14,
     color: '#666',
   },
+
   linkText: {
     fontSize: 14,
-    color: '#007AFF',
+    color: '#6A5AE0',
     fontWeight: '600',
   },
+
   errorMessage: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#ff3b30',
-    marginBottom: 16,
+    marginBottom: 10,
     textAlign: 'center',
   },
 });

@@ -9,7 +9,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthStore } from '../../store/authStore';
-import { SplashScreen } from '../auth/screens/SplashScreen';
+import { SplashScreen } from '../../component/common/SplashScreen';
 import { LoginScreen } from '../auth/screens/LoginScreen';
 import { SignupScreen } from '../auth/screens/SignupScreen';
 import AppStackScreen from './AppStackScreen';

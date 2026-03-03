@@ -15,9 +15,9 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../../component/customComponent/InputBox';
-
 import { useLogin } from '../../../hooks/useLogin';
 import Button from '../../../component/customComponent/Button';
+import { GradientWrapper } from '../../../component/customComponent/LinearGradient';
 
 type AuthStackParamList = {
   Login: undefined;
@@ -82,14 +82,17 @@ export const LoginScreen: React.FC = () => {
   };
 
   return (
-    <>
+    <GradientWrapper>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>Sign in to continue</Text>
+        <View style={styles.topSection}>
+          <Text style={styles.brand}>Jobsly</Text>
         </View>
 
-        <View style={styles.form}>
+        {/* Card */}
+        <View style={styles.card}>
+          <Text style={styles.title}>Welcome Back</Text>
+          <Text style={styles.subtitle}>Sign in to continue</Text>
+
           <Input
             label="Email"
             placeholder="Enter your email"
@@ -101,7 +104,6 @@ export const LoginScreen: React.FC = () => {
             error={errors.email}
             keyboardType="email-address"
             autoCapitalize="none"
-            autoCorrect={false}
           />
 
           <Input
@@ -114,12 +116,10 @@ export const LoginScreen: React.FC = () => {
             }}
             error={errors.password}
             secureTextEntry
-            autoCapitalize="none"
           />
 
           {error && <Text style={styles.errorMessage}>{error.message}</Text>}
 
-          
           <Button
             title="Login"
             onPress={handleLogin}
@@ -135,54 +135,77 @@ export const LoginScreen: React.FC = () => {
           </View>
         </View>
       </View>
-    </>
+    </GradientWrapper>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
-    justifyContent: 'center',
   },
-  header: {
-    marginBottom: 40,
+
+  topSection: {
+    height: '35%',
+    justifyContent: 'center',
     alignItems: 'center',
   },
+
+  brand: {
+    fontSize: 28,
+    color: '#fff',
+    fontWeight: '700',
+  },
+
+  card: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    padding: 24,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+  },
+
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
+    fontSize: 26,
+    fontWeight: '700',
+    color: '#222',
+    marginBottom: 6,
   },
+
   subtitle: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 14,
+    color: '#777',
+    marginBottom: 24,
   },
-  form: {
-    width: '100%',
-  },
+
   loginButton: {
-    marginTop: 8,
+    marginTop: 12,
   },
+
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 24,
+    marginTop: 20,
   },
+
   footerText: {
     fontSize: 14,
     color: '#666',
   },
+
   linkText: {
     fontSize: 14,
-    color: '#007AFF',
+    color: '#5A4FCF',
     fontWeight: '600',
   },
+
   errorMessage: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#ff3b30',
-    marginBottom: 16,
+    marginBottom: 10,
     textAlign: 'center',
   },
 });

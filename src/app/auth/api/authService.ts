@@ -56,7 +56,7 @@ const fetchAPI = async <T>(
 /**
  * Login API call
  */
-export const loginAPI = async (
+export const loginWithEmail = async (
   credentials: LoginRequest
 ): Promise<LoginResponse> => {
   return fetchAPI<LoginResponse>('/login', {

@@ -5,7 +5,7 @@
  */
 
 import { useMutation } from '@tanstack/react-query';
-import { loginAPI } from '../app/auth/api/authService';
+import { loginWithEmail } from '../app/auth/api/authService';
 import { useAuthStore } from '../store/authStore';
 import { LoginRequest, ApiError } from '../types/authTypes';
 
@@ -14,7 +14,7 @@ export const useLogin = () => {
 
   return useMutation<void, ApiError, LoginRequest>({
     mutationFn: async (credentials: LoginRequest) => {
-      const response = await loginAPI(credentials);
+      const response = await loginWithEmail(credentials);
       await setAuth(response.token, response.user);
     },
     onError: (error) => {
