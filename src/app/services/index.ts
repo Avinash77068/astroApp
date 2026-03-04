@@ -1,6 +1,7 @@
 // Simple API call function
 // const BaseUrl = 'https://astro-ai-backend-smoky.vercel.app/api';
-const BaseUrl = 'http://10.0.2.2:3000';
+
+import { ENV } from "../../config/env";
 
 export const fetchHomepage = async ({
   endpoint,
@@ -8,7 +9,7 @@ export const fetchHomepage = async ({
   endpoint: string;
 }): Promise<any> => {
   try {
-    const response = await fetch(`${BaseUrl}${endpoint}`);
+    const response = await fetch(`${ENV.API_BASE_URL}${endpoint}`);
     const result = await response.json();
     console.log('result', result);
     return result.data;
@@ -23,7 +24,7 @@ export const astroLoger = async ({
   endpoint: string;
 }): Promise<any> => {
   try {
-    const response = await fetch(`${BaseUrl}${endpoint}`);
+    const response = await fetch(`${ENV.API_BASE_URL}${endpoint}`);
     const result = await response.json();
     console.log('result', result);
     return result.data;
@@ -42,7 +43,7 @@ export const userChat = async (
 ): Promise<any> => {
   try {
     const response = await fetch(
-      `https://astro-ai-backend-smoky.vercel.app/api${endpoint}`,
+      `${ENV.API_BASE_URL}${endpoint}`,
       {
         method: 'POST',
         headers: {

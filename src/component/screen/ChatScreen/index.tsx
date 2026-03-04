@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { LightColors } from '../../../constant/colors';
 import SearchBar from '../../customComponent/SearchBar';
-import astroLogerList from '../../../data/astroLogerList';
 import AstrologerList from './AstrologerList/AstrologerList';
 import AstrologerFilterSheet from './AstrologerList/AstrologerFilterSheet';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useAstroLoger } from '../../../hooks/useAstroLoger';
 
 const ChatScreen = () => {
   const [openFilterSheet, setOpenFilterSheet] = useState(false);
   const navigation = useNavigation<any>();
+  const { data } = useAstroLoger();
+
   
   const handleChatPress = (item: any) => {
     const parentNav = navigation.getParent();
@@ -41,10 +43,7 @@ const ChatScreen = () => {
           }}
         />
       )}
-      <AstrologerList
-        data={astroLogerList}
-        onChatPress={handleChatPress}
-      />
+      <AstrologerList data={data?.astrologerList} onChatPress={handleChatPress} />
     </View>
   );
 };

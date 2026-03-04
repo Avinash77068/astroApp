@@ -7,6 +7,11 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  phone?: string;
+  isVerified?: boolean;
+  role?: string;
+  lastLogin?: string;
+  createdAt?: string;
 }
 
 export interface LoginRequest {
@@ -23,10 +28,12 @@ export interface SignupRequest {
   name: string;
   email: string;
   password: string;
+  phone: string;
 }
 
 export interface SignupResponse {
-  message: string;
+  user: User;
+  token: string;
 }
 
 export interface AuthState {
@@ -43,6 +50,36 @@ export interface AuthActions {
 }
 
 export type AuthStore = AuthState & AuthActions;
+
+export interface OtpRequest {
+  phone: string;
+}
+
+export interface OtpResponse {
+  phone: string;
+  otpExpiresIn: number;
+  otp?: string;
+}
+
+export interface VerifyOtpRequest {
+  phone: string;
+  otp: string;
+}
+
+export interface VerifyOtpResponse {
+  user: User;
+  token: string;
+}
+
+export interface UpdateProfileRequest {
+  name?: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface ProfileResponse {
+  user: User;
+}
 
 export interface ApiError {
   message: string;

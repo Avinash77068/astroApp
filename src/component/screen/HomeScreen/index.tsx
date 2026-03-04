@@ -8,7 +8,6 @@ import { useAstroLoger } from '../../../hooks/useAstroLoger';
 import SearchBar from '../../customComponent/SearchBar';
 
 import FirstChatFreeBanner from './Banner/FirstChatFreeBanner';
-import astroLogerList from '../../../data/astroLogerList';
 import AstroFeatureGrid from './FeatureDashboard/AstroFeatureGrid';
 import featuresList from '../../../data/featuresList';
 import Button from '../../customComponent/Button';
@@ -23,12 +22,15 @@ const HomeScreen = () => {
   useHomepage();
   useAstroLoger();
   const navigation = useNavigation();
+  const { data } = useAstroLoger();
+
+  console.log('data', data);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <SearchBar value="" onChangeText={() => {}} />
-        <LiveAstroLogerList data={astroLogerList} />
+        <LiveAstroLogerList data={data?.astrologerList} />
         <FirstChatFreeBanner onPress={() => {}} />
         <AstroFeatureGrid
           data={featuresList}

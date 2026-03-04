@@ -9,6 +9,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../../component/customComponent/InputBox';
 import { useLogin } from '../../../hooks/useLogin';
+import { useSendOtp } from '../../../hooks/useSendOtp';
 import Button from '../../../component/customComponent/Button';
 import { GradientWrapper } from '../../../component/customComponent/LinearGradient';
 
@@ -25,7 +26,8 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<
 
 export const LoginScreen: React.FC = () => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
-  const { mutate: login, isPending, error } = useLogin();
+  const { mutate: login, isPending: isLoginPending, error: loginError } = useLogin();
+  const { mutate: sendOtp, isPending: isOtpPending, error: otpError } = useSendOtp();
 
   const [loginMode, setLoginMode] = useState<'email' | 'phone'>('email');
 
@@ -90,7 +92,17 @@ export const LoginScreen: React.FC = () => {
     }
 
     if (loginMode === 'phone') {
-      navigation.navigate('Otp', { phone });
+      sendOtp(
+        { phone: phone.trim() },
+        {
+          onSuccess: () => {
+            navigation.navigate('Otp', { phone: phone.trim() });
+          },
+          onError: err => {
+            Alert.alert('Error', err.message || 'Failed to send OTP');
+          },
+        },
+      );
     }
   };
 
@@ -189,12 +201,16 @@ export const LoginScreen: React.FC = () => {
             />
           )}
 
-          {error && <Text style={styles.errorMessage}>{error.message}</Text>}
+          {(loginError || otpError) && (
+            <Text style={styles.errorMessage}>
+              {loginError?.message || otpError?.message}
+            </Text>
+          )}
 
           <Button
             title={loginMode === 'email' ? 'Login' : 'Send OTP'}
             onPress={handleLogin}
-            loading={isPending}
+            loading={isLoginPending || isOtpPending}
             style={styles.loginButton}
           />
 

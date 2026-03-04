@@ -52,7 +52,7 @@ const LiveAstroLogerList: React.FC<Props> = ({ data }) => {
       horizontal
       showsHorizontalScrollIndicator={false}
       data={data}
-      keyExtractor={item => item.id}
+      keyExtractor={(item, index) => '1' + index}
       renderItem={renderItem}
       contentContainerStyle={AstroLogerListStyles.container}
       style={{ flexGrow: 0 }}

@@ -1,21 +1,17 @@
-/**
- * useLogin Hook
- * TanStack Query mutation hook for login functionality
- * Handles API call, success/error states, and Zustand store updates
- */
-
 import { useMutation } from '@tanstack/react-query';
-import { loginWithEmail } from '../app/auth/api/authService';
+import { login } from '../app/services/authService';
 import { useAuthStore } from '../store/authStore';
-import { LoginRequest, ApiError } from '../types/authTypes';
+import { LoginRequest, LoginResponse } from '../types/authTypes';
+import { ApiError } from '../types/api';
 
 export const useLogin = () => {
   const setAuth = useAuthStore((state) => state.setAuth);
 
-  return useMutation<void, ApiError, LoginRequest>({
+  return useMutation<LoginResponse, ApiError, LoginRequest>({
     mutationFn: async (credentials: LoginRequest) => {
-      const response = await loginWithEmail(credentials);
+      const response = await login(credentials);
       await setAuth(response.token, response.user);
+      return response;
     },
     onError: (error) => {
       console.error('Login failed:', error.message);

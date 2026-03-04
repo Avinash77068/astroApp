@@ -4,22 +4,17 @@ import { useEffect } from 'react';
 import { useAstroLogerStore } from '../store/useAstroLogerStore';
 
 export const useAstroLoger = () => {
-  const setAstroLogerData = useAstroLogerStore((state: any) => state.setAstroLogerData);
+  const setAstroLogerData = useAstroLogerStore(
+    (state: any) => state.setAstroLogerData,
+  );
   const query = useQuery({
     queryKey: ['astrologer'],
-    // api call
     queryFn: () => astroLoger({ endpoint: '/astrologer' }),
-    // enable query
     enabled: true,
-    // ✅ 5 minutes tak fresh mana jayega
     staleTime: 1000 * 60 * 5,
-    // ✅ Cache memory me 10 minutes rahega
-    gcTime: 1000 * 60 * 10, // (v5 me gcTime hota hai)
-    // 🔄 Refetch options
+    gcTime: 1000 * 60 * 10,
     refetchOnMount: false,
-    // 🔄 Refetch when window regains focus
     refetchOnWindowFocus: false,
-    // 🔄 Refetch when network reconnects
     refetchOnReconnect: false,
   });
   useEffect(() => {
@@ -30,4 +25,3 @@ export const useAstroLoger = () => {
   return query;
 };
 export { useAstroLogerStore };
-

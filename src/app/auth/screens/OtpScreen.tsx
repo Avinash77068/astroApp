@@ -15,7 +15,8 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GradientWrapper } from '../../../component/customComponent/LinearGradient';
 import Button from '../../../component/customComponent/Button';
-import { useAuthStore } from '../../../store/authStore';
+import { useVerifyOtp } from '../../../hooks/useVerifyOtp';
+import { useSendOtp } from '../../../hooks/useSendOtp';
 
 type AuthStackParamList = {
   Login: undefined;
@@ -28,10 +29,11 @@ type OtpScreenProps = NativeStackScreenProps<AuthStackParamList, 'Otp'>;
 export const OtpScreen: React.FC<OtpScreenProps> = ({ route, navigation }) => {
   const { phone } = route.params;
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
-  const [isLoading, setIsLoading] = useState(false);
   const [timer, setTimer] = useState(60);
   const inputRefs = useRef<(TextInput | null)[]>([]);
-  const setAuth = useAuthStore((state) => state.setAuth);
+  
+  const { mutate: verifyOtp, isPending: isVerifying } = useVerifyOtp();
+  const { mutate: sendOtp, isPending: isSending } = useSendOtp();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,35 +61,42 @@ export const OtpScreen: React.FC<OtpScreenProps> = ({ route, navigation }) => {
     }
   };
 
-  const handleVerifyOtp = async () => {
+  const handleVerifyOtp = () => {
     const otpCode = otp.join('');
     if (otpCode.length !== 6) {
       Alert.alert('Error', 'Please enter complete OTP');
       return;
     }
 
-    setIsLoading(true);
-    try {
-      // TODO: Implement OTP verification API call
-      await new Promise<void>(resolve => setTimeout(() => resolve(), 1500));
-      // After successful OTP verification, authenticate the user
-      // This will switch the navigator to the main app
-      await setAuth('dummy-token', { id: '1', name: 'User', email: 'user@example.com' });
-      Alert.alert('Success', 'OTP verified successfully!');
-    } catch (error) {
-      Alert.alert('Error', 'Invalid OTP. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
+    verifyOtp(
+      { phone, otp: otpCode },
+      {
+        onSuccess: () => {
+          Alert.alert('Success', 'OTP verified successfully!');
+        },
+        onError: (err) => {
+          Alert.alert('Error', err.message || 'Invalid OTP. Please try again.');
+        },
+      }
+    );
   };
 
   const handleResendOtp = () => {
     if (timer > 0) return;
 
-    setTimer(60);
-    setOtp(['', '', '', '', '', '']);
-    Alert.alert('Success', 'OTP sent successfully!');
-    // TODO: Implement resend OTP API call
+    sendOtp(
+      { phone },
+      {
+        onSuccess: () => {
+          setTimer(60);
+          setOtp(['', '', '', '', '', '']);
+          Alert.alert('Success', 'OTP sent successfully!');
+        },
+        onError: (err) => {
+          Alert.alert('Error', err.message || 'Failed to send OTP');
+        },
+      }
+    );
   };
 
   return (
@@ -125,7 +134,7 @@ export const OtpScreen: React.FC<OtpScreenProps> = ({ route, navigation }) => {
           <Button
             title="Verify OTP"
             onPress={handleVerifyOtp}
-            loading={isLoading}
+            loading={isVerifying}
             style={styles.verifyButton}
           />
 

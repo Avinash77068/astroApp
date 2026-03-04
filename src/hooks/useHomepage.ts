@@ -7,21 +7,13 @@ export const useHomepage = () => {
   const setData = useHomepageStore((state: any) => state.setData);
 
   const query = useQuery({
-    // query key
     queryKey: ['homepage'],
-    // api call
     queryFn: () => fetchHomepage({ endpoint: '/homepage' }),
-    // enable query
     enabled: true,
-    // ✅ 5 minutes tak fresh mana jayega
     staleTime: 1000 * 60 * 5,
-    // ✅ Cache memory me 10 minutes rahega
-    gcTime: 1000 * 60 * 10, // (v5 me gcTime hota hai)
-    // 🔄 Refetch options
+    gcTime: 1000 * 60 * 10,
     refetchOnMount: false,
-    // 🔄 Refetch when window regains focus
     refetchOnWindowFocus: false,
-    // 🔄 Refetch when network reconnects
     refetchOnReconnect: false,
   });
 

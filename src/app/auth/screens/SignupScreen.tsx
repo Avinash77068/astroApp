@@ -30,11 +30,13 @@ export const SignupScreen: React.FC = () => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({
     name: '',
     email: '',
+    phone: '',
     password: '',
     confirmPassword: '',
   });
@@ -43,6 +45,7 @@ export const SignupScreen: React.FC = () => {
     const newErrors = {
       name: '',
       email: '',
+      phone: '',
       password: '',
       confirmPassword: '',
     };
@@ -61,6 +64,14 @@ export const SignupScreen: React.FC = () => {
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       newErrors.email = 'Email is invalid';
+      isValid = false;
+    }
+
+    if (!phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+      isValid = false;
+    } else if (phone.trim().length < 10) {
+      newErrors.phone = 'Phone number must be at least 10 digits';
       isValid = false;
     }
 
@@ -93,23 +104,24 @@ export const SignupScreen: React.FC = () => {
       {
         name: name.trim(),
         email: email.trim(),
+        phone: phone.trim(),
         password,
       },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           Alert.alert(
             'Success',
-            data.message || 'Account created successfully',
+            'Account created successfully',
             [
               {
                 text: 'OK',
                 onPress: () => {
                   setName('');
                   setEmail('');
+                  setPhone('');
                   setPassword('');
                   setConfirmPassword('');
-                  setErrors({ name: '', email: '', password: '', confirmPassword: '' });
-                  navigation.navigate('Login');
+                  setErrors({ name: '', email: '', phone: '', password: '', confirmPassword: '' });
                 },
               },
             ]
@@ -157,6 +169,18 @@ export const SignupScreen: React.FC = () => {
             error={errors.email}
             keyboardType="email-address"
             autoCapitalize="none"
+          />
+
+          <Input
+            label="Phone Number"
+            placeholder="Enter your phone number"
+            value={phone}
+            onChangeText={text => {
+              setPhone(text);
+              setErrors(prev => ({ ...prev, phone: '' }));
+            }}
+            error={errors.phone}
+            keyboardType="phone-pad"
           />
 
           <Input
@@ -209,7 +233,7 @@ const styles = StyleSheet.create({
   },
 
   topSection: {
-    height: '30%',
+    height: '25%',
     justifyContent: 'center',
     alignItems: 'center',
   },
