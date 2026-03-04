@@ -1,17 +1,10 @@
 /**
  * LoginScreen
- * User login interface with email/password authentication
- * Uses TanStack Query for API calls, no business logic in component
+ * Email + Phone Login with Toggle
  */
 
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../../component/customComponent/InputBox';
@@ -22,6 +15,7 @@ import { GradientWrapper } from '../../../component/customComponent/LinearGradie
 type AuthStackParamList = {
   Login: undefined;
   Signup: undefined;
+  Otp: { phone: string };
 };
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
@@ -33,28 +27,48 @@ export const LoginScreen: React.FC = () => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
   const { mutate: login, isPending, error } = useLogin();
 
+  const [loginMode, setLoginMode] = useState<'email' | 'phone'>('email');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({ email: '', password: '' });
+  const [phone, setPhone] = useState('');
+
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+    phone: '',
+  });
 
   const validateForm = (): boolean => {
-    const newErrors = { email: '', password: '' };
+    const newErrors = { email: '', password: '', phone: '' };
     let isValid = true;
 
-    if (!email.trim()) {
-      newErrors.email = 'Email is required';
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email is invalid';
-      isValid = false;
+    if (loginMode === 'email') {
+      if (!email.trim()) {
+        newErrors.email = 'Email is required';
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        newErrors.email = 'Email is invalid';
+        isValid = false;
+      }
+
+      if (!password.trim()) {
+        newErrors.password = 'Password is required';
+        isValid = false;
+      } else if (password.length < 6) {
+        newErrors.password = 'Password must be at least 6 characters';
+        isValid = false;
+      }
     }
 
-    if (!password.trim()) {
-      newErrors.password = 'Password is required';
-      isValid = false;
-    } else if (password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-      isValid = false;
+    if (loginMode === 'phone') {
+      if (!phone.trim()) {
+        newErrors.phone = 'Phone number is required';
+        isValid = false;
+      } else if (phone.length < 10) {
+        newErrors.phone = 'Invalid phone number';
+        isValid = false;
+      }
     }
 
     setErrors(newErrors);
@@ -62,28 +76,28 @@ export const LoginScreen: React.FC = () => {
   };
 
   const handleLogin = () => {
-    if (!validateForm()) {
-      return;
+    if (!validateForm()) return;
+
+    if (loginMode === 'email') {
+      login(
+        { email: email.trim(), password },
+        {
+          onError: err => {
+            Alert.alert('Login Failed', err.message || 'Something went wrong');
+          },
+        },
+      );
     }
 
-    login(
-      { email: email.trim(), password },
-      {
-        onSuccess: () => {
-          setEmail('');
-          setPassword('');
-          setErrors({ email: '', password: '' });
-        },
-        onError: (err) => {
-          Alert.alert('Login Failed', err.message || 'An error occurred');
-        },
-      }
-    );
+    if (loginMode === 'phone') {
+      navigation.navigate('Otp', { phone });
+    }
   };
 
   return (
     <GradientWrapper>
       <View style={styles.container}>
+        {/* Top Section */}
         <View style={styles.topSection}>
           <Text style={styles.brand}>Jobsly</Text>
         </View>
@@ -93,35 +107,92 @@ export const LoginScreen: React.FC = () => {
           <Text style={styles.title}>Welcome Back</Text>
           <Text style={styles.subtitle}>Sign in to continue</Text>
 
-          <Input
-            label="Email"
-            placeholder="Enter your email"
-            value={email}
-            onChangeText={text => {
-              setEmail(text);
-              setErrors(prev => ({ ...prev, email: '' }));
-            }}
-            error={errors.email}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
+          {/* Toggle */}
+          <View style={styles.switchContainer}>
+            <TouchableOpacity
+              style={[
+                styles.switchButton,
+                loginMode === 'email' && styles.activeSwitch,
+              ]}
+              onPress={() => setLoginMode('email')}
+            >
+              <Text
+                style={[
+                  styles.switchText,
+                  loginMode === 'email' && styles.activeSwitchText,
+                ]}
+              >
+                Email
+              </Text>
+            </TouchableOpacity>
 
-          <Input
-            label="Password"
-            placeholder="Enter your password"
-            value={password}
-            onChangeText={text => {
-              setPassword(text);
-              setErrors(prev => ({ ...prev, password: '' }));
-            }}
-            error={errors.password}
-            secureTextEntry
-          />
+            <TouchableOpacity
+              style={[
+                styles.switchButton,
+                loginMode === 'phone' && styles.activeSwitch,
+              ]}
+              onPress={() => setLoginMode('phone')}
+            >
+              <Text
+                style={[
+                  styles.switchText,
+                  loginMode === 'phone' && styles.activeSwitchText,
+                ]}
+              >
+                Phone
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Email Login */}
+          {loginMode === 'email' && (
+            <>
+              <Input
+                label="Email"
+                placeholder="Enter your email"
+                value={email}
+                onChangeText={text => {
+                  setEmail(text);
+                  setErrors(prev => ({ ...prev, email: '' }));
+                }}
+                error={errors.email}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+
+              <Input
+                label="Password"
+                placeholder="Enter your password"
+                value={password}
+                onChangeText={text => {
+                  setPassword(text);
+                  setErrors(prev => ({ ...prev, password: '' }));
+                }}
+                error={errors.password}
+                secureTextEntry
+              />
+            </>
+          )}
+
+          {/* Phone Login */}
+          {loginMode === 'phone' && (
+            <Input
+              label="Phone Number"
+              placeholder="Enter your phone number"
+              value={phone}
+              onChangeText={text => {
+                setPhone(text);
+                setErrors(prev => ({ ...prev, phone: '' }));
+              }}
+              error={errors.phone}
+              keyboardType="phone-pad"
+            />
+          )}
 
           {error && <Text style={styles.errorMessage}>{error.message}</Text>}
 
           <Button
-            title="Login"
+            title={loginMode === 'email' ? 'Login' : 'Send OTP'}
             onPress={handleLogin}
             loading={isPending}
             style={styles.loginButton}
@@ -178,7 +249,35 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     color: '#777',
-    marginBottom: 24,
+    marginBottom: 20,
+  },
+
+  switchContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#f2f2f2',
+    borderRadius: 12,
+    marginBottom: 20,
+  },
+
+  switchButton: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderRadius: 12,
+  },
+
+  activeSwitch: {
+    backgroundColor: '#5A4FCF',
+  },
+
+  switchText: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '600',
+  },
+
+  activeSwitchText: {
+    color: '#fff',
   },
 
   loginButton: {

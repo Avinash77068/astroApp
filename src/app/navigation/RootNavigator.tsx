@@ -12,11 +12,13 @@ import { useAuthStore } from '../../store/authStore';
 import { SplashScreen } from '../../component/common/SplashScreen';
 import { LoginScreen } from '../auth/screens/LoginScreen';
 import { SignupScreen } from '../auth/screens/SignupScreen';
+import { OtpScreen } from '../auth/screens/OtpScreen';
 import AppStackScreen from './AppStackScreen';
 
 type AuthStackParamList = {
   Login: undefined;
   Signup: undefined;
+  Otp: { phone: string };
 };
 
 type AppStackParamList = {
@@ -31,6 +33,7 @@ function AuthNavigator() {
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name="Login" component={LoginScreen} />
       <AuthStack.Screen name="Signup" component={SignupScreen} />
+      <AuthStack.Screen name="Otp" component={OtpScreen} />
     </AuthStack.Navigator>
   );
 }
