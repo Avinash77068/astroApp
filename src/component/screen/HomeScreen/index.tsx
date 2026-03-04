@@ -26,6 +26,9 @@ const HomeScreen = () => {
     gridConfig.showKundliButton?.show ? gridConfig.showKundliButton : null,
     gridConfig.showZodiacSigns?.show ? gridConfig.showZodiacSigns : null,
     gridConfig.horoscope?.show ? gridConfig.horoscope : null,
+    gridConfig.dasha?.show ? gridConfig.dasha : null,
+    gridConfig.transits?.show ? gridConfig.transits : null,
+    gridConfig.liveAstrologer?.show ? gridConfig.liveAstrologer : null,
   ].filter(Boolean) : [];
 
   return (
