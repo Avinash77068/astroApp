@@ -9,7 +9,6 @@ import SearchBar from '../../customComponent/SearchBar';
 
 import FirstChatFreeBanner from './Banner/FirstChatFreeBanner';
 import AstroFeatureGrid from './FeatureDashboard/AstroFeatureGrid';
-import featuresList from '../../../data/featuresList';
 import Button from '../../customComponent/Button';
 import { useNavigation } from '@react-navigation/native';
 import { MessageCircle, PhoneCall } from 'lucide-react-native';
@@ -19,10 +18,15 @@ import LiveAstroLogerList from './astrologerList/LiveAstroLogerList';
 
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
-  const homepageData = useHomepage();
   const { data: astrologerData } = useAstroLoger();
-
-  console.log('Sidebar Config:', homepageData?.data?.sidebarConfig);
+  const homepageData = useHomepage();
+  
+  const gridConfig = homepageData?.data?.gridConfig;
+  const gridItems = gridConfig ? [
+    gridConfig.showKundliButton?.show ? gridConfig.showKundliButton : null,
+    gridConfig.showZodiacSigns?.show ? gridConfig.showZodiacSigns : null,
+    gridConfig.horoscope?.show ? gridConfig.horoscope : null,
+  ].filter(Boolean) : [];
 
   return (
     <View style={styles.container}>
@@ -31,8 +35,8 @@ const HomeScreen = () => {
         <LiveAstroLogerList data={astrologerData?.astrologerList} />
         <FirstChatFreeBanner onPress={() => {}} />
         <AstroFeatureGrid
-          data={featuresList}
-          onPress={item => console.log(item.title)}
+          data={gridItems}
+          onPress={item => console.log('Navigate to:', item.route)}
         />
         <View style={styles.buttonContainer}>
           <Button

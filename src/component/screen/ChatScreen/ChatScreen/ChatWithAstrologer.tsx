@@ -30,7 +30,6 @@ const ChatWithAstrologer = () => {
   useEffect(() => {
     if (astrologer) {
       setActiveChat(astrologer);
-      console.log('astrologer', astrologer);
     }
   }, [astrologer, setActiveChat]);
 
