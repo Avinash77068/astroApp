@@ -10,7 +10,6 @@ import SearchBar from '../../customComponent/SearchBar';
 import FirstChatFreeBanner from './Banner/FirstChatFreeBanner';
 import AstroFeatureGrid from './FeatureDashboard/AstroFeatureGrid';
 import Button from '../../customComponent/Button';
-import { useNavigation } from '@react-navigation/native';
 import { MessageCircle, PhoneCall } from 'lucide-react-native';
 import { LightColors } from '../../../constant/colors';
 import LiveAstroLogerList from './astrologerList/LiveAstroLogerList';
