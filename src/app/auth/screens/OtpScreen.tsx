@@ -15,6 +15,7 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GradientWrapper } from '../../../component/customComponent/LinearGradient';
 import Button from '../../../component/customComponent/Button';
+import { useAuthStore } from '../../../store/authStore';
 
 type AuthStackParamList = {
   Login: undefined;
@@ -30,6 +31,7 @@ export const OtpScreen: React.FC<OtpScreenProps> = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [timer, setTimer] = useState(60);
   const inputRefs = useRef<(TextInput | null)[]>([]);
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -68,8 +70,10 @@ export const OtpScreen: React.FC<OtpScreenProps> = ({ route, navigation }) => {
     try {
       // TODO: Implement OTP verification API call
       await new Promise<void>(resolve => setTimeout(() => resolve(), 1500));
+      // After successful OTP verification, authenticate the user
+      // This will switch the navigator to the main app
+      await setAuth('dummy-token', { id: '1', name: 'User', email: 'user@example.com' });
       Alert.alert('Success', 'OTP verified successfully!');
-      // Navigate to main app or handle success
     } catch (error) {
       Alert.alert('Error', 'Invalid OTP. Please try again.');
     } finally {
