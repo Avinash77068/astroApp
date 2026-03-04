@@ -1,10 +1,19 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import useSidebar from '../../store/useSidebar';
+import { useHomepageStore } from '../../store/useHomeStore';
 import { DarkColors } from '../../constant/colors';
 
 const Sidebar = () => {
   const { closeSidebar } = useSidebar();
+  const homepageData = useHomepageStore((state) => state.data);
+  
+  const sidebarConfig = homepageData?.sidebarConfig;
+  const sidebarItems = sidebarConfig?.sidebarItems || [];
+  const activeSidebarItems = sidebarItems
+    .filter((item: any) => item.isActive)
+    .sort((a: any, b: any) => a.order - b.order);
+
   return (
     <>
       {/* Overlay (Outside Click) */}
@@ -15,10 +24,20 @@ const Sidebar = () => {
       />
       {/* Sidebar Panel */}
       <View style={styles.sidebar}>
-        <Text style={styles.sidebarItem}>🏠 Home</Text>
-        <Text style={styles.sidebarItem}>🪐 Kundli</Text>
-        <Text style={styles.sidebarItem}>💬 Chat</Text>
-        <Text style={styles.sidebarItem}>👤 Profile</Text>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {activeSidebarItems.map((item: any) => (
+            <TouchableOpacity
+              key={item._id}
+              style={styles.sidebarItemContainer}
+              onPress={() => {
+                console.log('Navigate to:', item.route);
+                closeSidebar();
+              }}
+            >
+              <Text style={styles.sidebarItem}>{item.title}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
     </>
   );
@@ -49,10 +68,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
   },
+  sidebarItemContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: DarkColors.border,
+  },
   sidebarItem: {
     fontSize: 16,
     paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: DarkColors.border,
+    color: '#333',
   },
 });

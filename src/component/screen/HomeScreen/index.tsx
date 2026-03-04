@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import useSidebar from '../../../store/useSidebar';
-import Sidebar from '../../common/Sidebar';
+import SidebarComponent from '../../common/Sidebar';
 import { styles } from './HomeScreenCss';
 import { useHomepage } from '../../../hooks/useHomepage';
 import { useAstroLoger } from '../../../hooks/useAstroLoger';
@@ -19,18 +19,16 @@ import LiveAstroLogerList from './astrologerList/LiveAstroLogerList';
 
 const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
-  useHomepage();
-  useAstroLoger();
-  const navigation = useNavigation();
-  const { data } = useAstroLoger();
+  const homepageData = useHomepage();
+  const { data: astrologerData } = useAstroLoger();
 
-  console.log('data', data);
+  console.log('Sidebar Config:', homepageData?.data?.sidebarConfig);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <SearchBar value="" onChangeText={() => {}} />
-        <LiveAstroLogerList data={data?.astrologerList} />
+        <LiveAstroLogerList data={astrologerData?.astrologerList} />
         <FirstChatFreeBanner onPress={() => {}} />
         <AstroFeatureGrid
           data={featuresList}
@@ -66,7 +64,7 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      {isSidebarOpen && <Sidebar />}
+      {isSidebarOpen && <SidebarComponent />}
     </View>
   );
 };
