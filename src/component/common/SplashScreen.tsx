@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
-import Loader from './Loader';
+import SplashScreenLoader from './SplashScreenLoader';
 
 export const SplashScreen: React.FC = () => {
   const restoreSession = useAuthStore((state) => state.restoreSession);
@@ -17,10 +17,7 @@ export const SplashScreen: React.FC = () => {
    
   }, [restoreSession]);
 
-  const handleFinish = () => {
-    // Loader will auto-finish after 3 seconds
-    // Session restoration is already complete
-  };
+  const handleFinish = () => { };
 
-  return <Loader onFinish={handleFinish} />;
+  return <SplashScreenLoader onFinish={handleFinish} />;
 };

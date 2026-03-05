@@ -7,7 +7,7 @@ interface SplashScreenProps {
   onFinish: () => void;
 }
 
-const Loader: React.FC<SplashScreenProps> = ({ onFinish }) => {
+const SplashScreenLoader: React.FC<SplashScreenProps> = ({ onFinish }) => {
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
   const scaleAnim = React.useRef(new Animated.Value(0.8)).current;
 
@@ -36,7 +36,7 @@ const Loader: React.FC<SplashScreenProps> = ({ onFinish }) => {
   }, [fadeAnim, scaleAnim, onFinish]);
   const { data: homeData } = useHomepage();
   const appConfig: any = homeData?.appConfig;
-  console.log(appConfig,"appConfig")
+  console.log(appConfig, 'appConfig');
   return (
     <View style={styles.container}>
       <Animated.View
@@ -149,4 +149,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Loader;
+export default SplashScreenLoader;
