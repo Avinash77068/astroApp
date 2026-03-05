@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import ProfileScreen from '../../component/screen/ProfileScreen/ProfileScreen';
 import HomeScreen from '../../component/screen/HomeScreen';
 import KundliFormScreen from '../../component/screen/KundliFormScreen/KundliFormScreen';
@@ -10,19 +10,22 @@ import {
   Home,
   Menu,
   MessageCircle,
-  Search,
-  Settings,
   Stars,
   User,
   Wallet,
 } from 'lucide-react-native';
 import useSidebar from '../../store/useSidebar';
 import { View } from 'react-native';
+import { useHomepage } from '../../hooks/useHomepage';
+import { useAuthStore } from '../../store/authStore';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomStackScreen() {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, isSidebarOpen: sidebar } = useSidebar();
+  const { data: homeData } = useHomepage();
+  const {  user } = useAuthStore()
+  const appConfig: any = homeData?.appConfig;
 
   return (
     <Tab.Navigator
@@ -35,7 +38,14 @@ export default function BottomStackScreen() {
                 onPress={toggleSidebar}
                 style={{ marginHorizontal: 16 }}
               >
-                <Menu size={24} />
+                {!sidebar ? (
+                  <Menu size={24} />
+                ) : (
+                  <Image
+                    source={{ uri: appConfig?.logo }}
+                    style={{ width: 50, height: 50, borderRadius: 50 }}
+                  />
+                )}
               </TouchableOpacity>
             );
           }
@@ -66,7 +76,7 @@ export default function BottomStackScreen() {
         headerRight: () => (
           <View style={{ marginHorizontal: 16, flexDirection: 'row', gap: 16 }}>
             <Bell size={24} />
-            <Wallet size={24}/>
+            <Wallet size={24} />
           </View>
         ),
       })}
@@ -76,7 +86,7 @@ export default function BottomStackScreen() {
         component={HomeScreen}
         options={{
           tabBarIcon: () => <Home />,
-          headerTitle: 'Astro Guru',
+          headerTitle: !sidebar ? appConfig.appName : user?.name,
         }}
       />
       <Tab.Screen
