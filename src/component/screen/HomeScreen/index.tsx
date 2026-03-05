@@ -19,6 +19,8 @@ const HomeScreen = () => {
   const { isSidebarOpen } = useSidebar();
   const { data: astrologerData } = useAstroLoger();
   const homepageData = useHomepage();
+  const appConfig = homepageData?.data?.appConfig;
+  console.log(appConfig, 'homepageData');
   
   const gridConfig = homepageData?.data?.gridConfig;
   const gridItems = gridConfig ? [
@@ -41,32 +43,38 @@ const HomeScreen = () => {
           onPress={item => console.log('Navigate to:', item.route)}
         />
         <View style={styles.buttonContainer}>
-          <Button
-            title="Call"
-            onPress={() => {}}
-            variant="primary"
-            fullWidth={false}
-            style={{
-              flexDirection: 'row',
-              gap: 8,
-              backgroundColor: LightColors.secondary,
-            }}
-          >
-            <PhoneCall size={20} color="#fff" />
-          </Button>
-          <Button
-            onPress={() => {}}
-            variant="primary"
-            fullWidth={false}
-            title="Free Chat"
-            style={{
-              flexDirection: 'row',
-              gap: 8,
-              backgroundColor: LightColors.gradient,
-            }}
-          >
-            <MessageCircle size={20} color="#fff" />
-          </Button>
+          {appConfig?.showCallButton  ? (
+            <Button
+              title={appConfig.showCallButton?.buttonText}
+              onPress={() => {}}
+              variant="primary"
+              disabled={appConfig.showCallButton?.show}
+              fullWidth={false}
+              style={{
+                flexDirection: 'row',
+                gap: 8,
+                backgroundColor: LightColors.secondary,
+              }}
+            >
+              <PhoneCall size={20} color="#fff" />
+            </Button>
+          ) : null}
+          {appConfig?.showFreeChatButton ? (
+            <Button
+              onPress={() => {}}
+              variant="primary"
+              fullWidth={false}
+              disabled={appConfig.showFreeChatButton?.show}
+              title={appConfig.showFreeChatButton.buttonText}
+              style={{
+                flexDirection: 'row',
+                gap: 8,
+                backgroundColor: LightColors.gradient,
+              }}
+            >
+              <MessageCircle size={20} color="#fff" />
+            </Button>
+          ) : null}
         </View>
       </View>
 
