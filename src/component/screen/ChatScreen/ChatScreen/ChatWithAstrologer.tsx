@@ -50,9 +50,14 @@ const ChatWithAstrologer = () => {
     setInput('');
 
     try {
-      const userChatResponse = await sendChatMessage(newMessage.text, astrologer?.id);
+      const userChatResponse = await sendChatMessage(
+        newMessage.text,
+        astrologer?._id || '',
+      );
       const data = userChatResponse;
-      const astroMessage = createAstroMessage(data.data?.astroResponse || 'Sorry, I could not understand.');
+      const astroMessage = createAstroMessage(
+        data.message || 'Sorry, I could not understand.',
+      );
       setMessages(prev => {
         const filtered = prev.filter(m => m.id !== 'typing');
         return [...filtered, astroMessage];

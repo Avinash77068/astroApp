@@ -86,7 +86,8 @@ export default function BottomStackScreen() {
         component={HomeScreen}
         options={{
           tabBarIcon: () => <Home />,
-          headerTitle: !sidebar ? appConfig.appName : user?.name,
+          headerTitle:
+            !sidebar ? appConfig?.appName : user?.name ,
         }}
       />
       <Tab.Screen
