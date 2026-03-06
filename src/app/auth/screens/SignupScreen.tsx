@@ -159,11 +159,6 @@ export const SignupScreen: React.FC = () => {
         </View>
       )}
 
-      {error && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{error.message}</Text>
-        </View>
-      )}
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>Already have an account? </Text>
@@ -218,20 +213,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     color: '#2C2C2C',
     fontSize: 16,
-  },
-  errorContainer: {
-    position: 'absolute',
-    bottom: 80,
-    left: 24,
-    right: 24,
-    backgroundColor: '#ff3b30',
-    padding: 16,
-    borderRadius: 8,
-  },
-  errorText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 14,
   },
   footer: {
     position: 'absolute',
