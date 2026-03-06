@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Animated, Image } from 'react-native';
 import { useHomepage } from '../../hooks/useHomepage';
 import { LightColors } from '../../constant/colors';
-
+import logo from '../../../assets/logo.png';
 interface SplashScreenProps {
   onFinish: () => void;
 }
@@ -49,7 +49,7 @@ const SplashScreenLoader: React.FC<SplashScreenProps> = ({ onFinish }) => {
         ]}
       >
         <View style={styles.iconContainer}>
-          <Image source={{ uri: appConfig?.logo }} style={styles.logo} />
+          <Image source={logo} style={styles.logo} />
         </View>
         <Text style={styles.title}>{appConfig?.appName}</Text>
         <Text style={styles.subtitle}>{appConfig?.appDescription}</Text>
