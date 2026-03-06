@@ -11,7 +11,6 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { useSignup } from '../../../hooks/useSignup';
-import { GradientWrapper } from '../../../component/customComponent/LinearGradient';
 import NameStep from '../../../component/onboarding/NameStep';
 import PlaceStep from '../../../component/onboarding/PlaceStep';
 import DateStep from '../../../component/onboarding/DateStep';
