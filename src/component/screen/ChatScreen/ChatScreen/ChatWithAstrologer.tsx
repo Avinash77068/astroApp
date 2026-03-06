@@ -22,10 +22,13 @@ import {
   createInitialMessage,
   sendChatMessage,
 } from './utils/chatUtils';
+import { useAuthStore } from '../../../../store/authStore';
 
 const ChatWithAstrologer = () => {
   const route = useRoute<RouteProp<AppStackParamList, 'ChatWithAstrologer'>>();
   const astrologer = route.params?.astrologer;
+  const { user } = useAuthStore()
+  console.log('user', user);
   const { setActiveChat } = useActiveChat();
   useEffect(() => {
     if (astrologer) {
@@ -41,7 +44,7 @@ const ChatWithAstrologer = () => {
   const flatListRef = useRef<FlatList>(null);
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || !user) return;
 
     const newMessage = createUserMessage(input);
     const typingMessage = createTypingMessage();
@@ -52,11 +55,12 @@ const ChatWithAstrologer = () => {
     try {
       const userChatResponse = await sendChatMessage(
         newMessage.text,
-        astrologer?._id || '',
+        astrologer._id,
+        user.id,
       );
       const data = userChatResponse;
       const astroMessage = createAstroMessage(
-        data.message || 'Sorry, I could not understand.',
+        data.data.astroResponse || 'Sorry, I could not understand.',
       );
       setMessages(prev => {
         const filtered = prev.filter(m => m.id !== 'typing');

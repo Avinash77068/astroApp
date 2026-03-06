@@ -1,7 +1,6 @@
 
 import { userChat } from '../../../../../app/services';
-import { USER_ID, ERROR_MESSAGE_TEXT, FALLBACK_ASTRO_RESPONSE } from '../constants/chatConstants';
-
+import { ERROR_MESSAGE_TEXT } from '../constants/chatConstants';
 export interface Message {
   id: string;
   text: string;
@@ -42,12 +41,13 @@ export const createInitialMessage = (astrologerName?: string): Message => ({
 
 export const sendChatMessage = async (
   message: string,
-  astrologerId?: string,
+  astrologerId: string,
+  userId: string,
 ) => {
   const response = await userChat('/user/chat', {
-    userId: USER_ID,
+    userId: userId,
     message,
-    astrologerId: astrologerId || '',
+    astrologerId: astrologerId,
   });
   return response;
 };

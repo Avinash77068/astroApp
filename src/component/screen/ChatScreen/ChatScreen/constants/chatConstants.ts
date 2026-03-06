@@ -1,4 +1,4 @@
-export const USER_ID = '69883d3d4bec31f7014801cd';
+
 
 export const TYPING_MESSAGE_ID = 'typing';
 
