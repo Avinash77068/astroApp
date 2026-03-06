@@ -6,13 +6,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { Input } from '../../../component/customComponent/InputBox';
 import { useSignup } from '../../../hooks/useSignup';
-import Button from '../../../component/customComponent/Button';
 import { GradientWrapper } from '../../../component/customComponent/LinearGradient';
+import NameStep from '../../../component/onboarding/NameStep';
+import PlaceStep from '../../../component/onboarding/PlaceStep';
+import DateStep from '../../../component/onboarding/DateStep';
+import GenderStep from '../../../component/onboarding/GenderStep';
 
 type AuthStackParamList = {
   Login: undefined;
@@ -28,101 +31,53 @@ export const SignupScreen: React.FC = () => {
   const navigation = useNavigation<SignupScreenNavigationProp>();
   const { mutate: signup, isPending, error } = useSignup();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errors, setErrors] = useState({
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState({
     name: '',
+    place: '',
+    dateOfBirth: '',
+    gender: '',
     email: '',
     phone: '',
-    password: '',
-    confirmPassword: '',
   });
 
-  const validateForm = (): boolean => {
-    const newErrors = {
-      name: '',
-      email: '',
-      phone: '',
-      password: '',
-      confirmPassword: '',
-    };
-    let isValid = true;
-
-    if (!name.trim()) {
-      newErrors.name = 'Name is required';
-      isValid = false;
-    } else if (name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
-      isValid = false;
-    }
-
-    if (!email.trim()) {
-      newErrors.email = 'Email is required';
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email is invalid';
-      isValid = false;
-    }
-
-    if (!phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-      isValid = false;
-    } else if (phone.trim().length < 10) {
-      newErrors.phone = 'Phone number must be at least 10 digits';
-      isValid = false;
-    }
-
-    if (!password.trim()) {
-      newErrors.password = 'Password is required';
-      isValid = false;
-    } else if (password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-      isValid = false;
-    }
-
-    if (!confirmPassword.trim()) {
-      newErrors.confirmPassword = 'Please confirm your password';
-      isValid = false;
-    } else if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
+  const handleNameNext = (name: string) => {
+    setFormData(prev => ({...prev, name}));
+    setCurrentStep(1);
   };
 
-  const handleSignup = () => {
-    if (!validateForm()) {
-      return;
-    }
+  const handlePlaceNext = (place: string) => {
+    setFormData(prev => ({...prev, place}));
+    setCurrentStep(2);
+  };
+
+  const handleDateNext = (dateOfBirth: string) => {
+    setFormData(prev => ({...prev, dateOfBirth}));
+    setCurrentStep(3);
+  };
+
+  const handleGenderNext = async (gender: string) => {
+    const finalData = {
+      name: formData.name,
+      email: formData.email || 'user@example.com',
+      phone: formData.phone || '0000000000',
+      password: 'defaultPassword123',
+      place: formData.place,
+      dateOfBirth: formData.dateOfBirth,
+      gender,
+    };
 
     signup(
-      {
-        name: name.trim(),
-        email: email.trim(),
-        phone: phone.trim(),
-        password,
-      },
+      finalData,
       {
         onSuccess: () => {
           Alert.alert(
             'Success',
-            'Account created successfully',
+            'Profile created successfully!',
             [
               {
                 text: 'OK',
-                onPress: () => {
-                  setName('');
-                  setEmail('');
-                  setPhone('');
-                  setPassword('');
-                  setConfirmPassword('');
-                  setErrors({ name: '', email: '', phone: '', password: '', confirmPassword: '' });
-                },
+                onPress: () => navigation.navigate('Login'),
               },
             ]
           );
@@ -134,166 +89,166 @@ export const SignupScreen: React.FC = () => {
     );
   };
 
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <NameStep 
+            onNext={handleNameNext} 
+            initialValue={formData.name} 
+          />
+        );
+      case 1:
+        return (
+          <PlaceStep
+            onNext={handlePlaceNext}
+            onBack={handleBack}
+            initialValue={formData.place}
+          />
+        );
+      case 2:
+        return (
+          <DateStep
+            onNext={handleDateNext}
+            onBack={handleBack}
+            initialValue={formData.dateOfBirth}
+          />
+        );
+      case 3:
+        return (
+          <GenderStep
+            onNext={handleGenderNext}
+            onBack={handleBack}
+            initialValue={formData.gender}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <GradientWrapper>
-      <View style={styles.container}>
-        <View style={styles.topSection}>
-          <Text style={styles.brand}>Jobsly</Text>
-        </View>
-
-        {/* White Card */}
-        <View style={styles.card}>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Sign up to get started</Text>
-
-          <Input
-            label="Full Name"
-            placeholder="Enter your name"
-            value={name}
-            onChangeText={text => {
-              setName(text);
-              setErrors(prev => ({ ...prev, name: '' }));
-            }}
-            error={errors.name}
-            autoCapitalize="words"
-          />
-
-          <Input
-            label="Email"
-            placeholder="Enter your email"
-            value={email}
-            onChangeText={text => {
-              setEmail(text);
-              setErrors(prev => ({ ...prev, email: '' }));
-            }}
-            error={errors.email}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-
-          <Input
-            label="Phone Number"
-            placeholder="Enter your phone number"
-            value={phone}
-            onChangeText={text => {
-              setPhone(text);
-              setErrors(prev => ({ ...prev, phone: '' }));
-            }}
-            error={errors.phone}
-            keyboardType="phone-pad"
-          />
-
-          <Input
-            label="Password"
-            placeholder="Enter your password"
-            value={password}
-            onChangeText={text => {
-              setPassword(text);
-              setErrors(prev => ({ ...prev, password: '' }));
-            }}
-            error={errors.password}
-            secureTextEntry
-          />
-
-          <Input
-            label="Confirm Password"
-            placeholder="Confirm your password"
-            value={confirmPassword}
-            onChangeText={text => {
-              setConfirmPassword(text);
-              setErrors(prev => ({ ...prev, confirmPassword: '' }));
-            }}
-            error={errors.confirmPassword}
-            secureTextEntry
-          />
-
-          {error && <Text style={styles.errorMessage}>{error.message}</Text>}
-
-          <Button
-            title="Sign Up"
-            onPress={handleSignup}
-            loading={isPending}
-            style={styles.signupButton}
-          />
-
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>Already have an account? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.linkText}>Login</Text>
-            </TouchableOpacity>
-          </View>
+    <View style={styles.container}>
+      <View style={styles.progressContainer}>
+        <View style={styles.progressBar}>
+          {[0, 1, 2, 3].map(step => (
+            <View
+              key={step}
+              style={[
+                styles.progressDot,
+                step <= currentStep && styles.progressDotActive,
+              ]}
+            />
+          ))}
         </View>
       </View>
-    </GradientWrapper>
+
+      {renderStep()}
+      
+      {isPending && (
+        <View style={styles.loadingOverlay}>
+          <View style={styles.loadingBox}>
+            <ActivityIndicator size="large" color="#FF7A18" />
+            <Text style={styles.loadingText}>Setting up your profile...</Text>
+          </View>
+        </View>
+      )}
+
+      {error && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error.message}</Text>
+        </View>
+      )}
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Already have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.linkText}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFF8F2',
   },
-
-  topSection: {
-    height: '25%',
+  progressContainer: {
+    paddingTop: 60,
+    paddingHorizontal: 24,
+    paddingBottom: 16,
+  },
+  progressBar: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  progressDot: {
+    width: 40,
+    height: 4,
+    backgroundColor: '#ddd',
+    borderRadius: 2,
+  },
+  progressDotActive: {
+    backgroundColor: '#FF7A18',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  brand: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#fff',
-  },
-
-  card: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+  loadingBox: {
+    backgroundColor: '#F4E6D7',
     padding: 24,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
+    borderRadius: 16,
+    alignItems: 'center',
   },
-
-  title: {
-    fontSize: 26,
-    fontWeight: '700',
-    color: '#222',
-    marginBottom: 6,
+  loadingText: {
+    marginTop: 16,
+    color: '#2C2C2C',
+    fontSize: 16,
   },
-
-  subtitle: {
+  errorContainer: {
+    position: 'absolute',
+    bottom: 80,
+    left: 24,
+    right: 24,
+    backgroundColor: '#ff3b30',
+    padding: 16,
+    borderRadius: 8,
+  },
+  errorText: {
+    color: '#fff',
+    textAlign: 'center',
     fontSize: 14,
-    color: '#777',
-    marginBottom: 24,
   },
-
-  signupButton: {
-    marginTop: 12,
-  },
-
   footer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
   },
-
   footerText: {
     fontSize: 14,
     color: '#666',
   },
-
   linkText: {
     fontSize: 14,
-    color: '#6A5AE0',
+    color: '#FF7A18',
     fontWeight: '600',
-  },
-
-  errorMessage: {
-    fontSize: 13,
-    color: '#ff3b30',
-    marginBottom: 10,
-    textAlign: 'center',
   },
 });
