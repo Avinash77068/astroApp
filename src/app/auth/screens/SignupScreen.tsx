@@ -58,9 +58,9 @@ export const SignupScreen: React.FC = () => {
   const handleGenderNext = async (gender: string) => {
     const finalData = {
       name: formData.name,
-      email: formData.email || 'user@example.com',
-      phone: formData.phone || '0000000000',
-      password: 'defaultPassword123',
+      email: formData.email,
+      phone: formData.phone,
+      password: formData.name.toLowerCase().slice(0, 3) + '@123',
       place: formData.place,
       dateOfBirth: formData.dateOfBirth,
       gender,
