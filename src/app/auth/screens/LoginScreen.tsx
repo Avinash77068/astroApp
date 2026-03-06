@@ -12,6 +12,7 @@ import { useLogin } from '../../../hooks/useLogin';
 import { useSendOtp } from '../../../hooks/useSendOtp';
 import Button from '../../../component/customComponent/Button';
 import { GradientWrapper } from '../../../component/customComponent/LinearGradient';
+import { LightColors } from '../../../constant/colors';
 
 type AuthStackParamList = {
   Login: undefined;
@@ -245,7 +246,7 @@ const styles = StyleSheet.create({
 
   card: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: LightColors.background,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     padding: 24,

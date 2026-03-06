@@ -88,7 +88,7 @@ export const useColors = () => {
 
   return {
     LightColors: apiColors || LightColors,
-    DarkColors,
-    BorderColor,
+    DarkColors: DarkColors,
+    BorderColor: BorderColor,
   };
 };

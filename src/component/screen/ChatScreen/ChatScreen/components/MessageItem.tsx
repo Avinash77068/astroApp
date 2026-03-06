@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import TypingIndicator from './TypingIndicator';
 import { Message } from '../utils/chatUtils';
+import { LightColors } from '../../../../../constant/colors';
 
 interface MessageItemProps {
   item: Message;
@@ -15,7 +16,7 @@ const MessageItem: React.FC<MessageItemProps> = ({ item }) => {
           style={{
             padding: 12,
             borderRadius: 18,
-            backgroundColor: '#F4E6D7',
+            backgroundColor: LightColors.background,
             borderBottomLeftRadius: 4,
           }}
         >

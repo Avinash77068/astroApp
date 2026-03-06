@@ -11,11 +11,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import NetworkLogger, { startNetworkLogging } from 'react-native-network-logger';
 import { queryClient } from './src/config/queryClient';
 import { RootNavigator } from './src/app/navigation/RootNavigator';
+import { useColors } from './src/constant/colors';
 
 
 export default function App() {
   const [showLogger, setShowLogger] = useState(false);
-
+  const colors = useColors();
+  console.log('colors', colors);
   useEffect(() => {
     if (__DEV__) {
       startNetworkLogging();
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 40,
     right: 20,
-    backgroundColor: '#000',
+    backgroundColor: '#111827',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 25,
