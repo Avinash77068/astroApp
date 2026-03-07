@@ -33,7 +33,7 @@ export default function AppStackScreen() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [showTimer, countdownSeconds]);
+  }, [activeChat, showTimer, countdownSeconds]);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)

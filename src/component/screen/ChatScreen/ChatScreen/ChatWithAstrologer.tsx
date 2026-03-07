@@ -34,6 +34,9 @@ const ChatWithAstrologer = () => {
   const [remainingSeconds, setRemainingSeconds] = useState(60);
   
   useEffect(() => {
+    setRemainingSeconds(60);
+    setShowRechargeModal(false);
+    
     const interval = setInterval(() => {
       setRemainingSeconds(prev => {
         if (prev <= 1) {
@@ -45,7 +48,7 @@ const ChatWithAstrologer = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [astrologer]);
   
   console.log('user', user);
   const { setActiveChat } = useActiveChat();
