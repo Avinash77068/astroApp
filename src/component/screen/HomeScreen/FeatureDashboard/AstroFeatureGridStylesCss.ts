@@ -1,15 +1,12 @@
 import { Dimensions, StyleSheet } from "react-native";
 import { LightColors } from "../../../../constant/colors";
-const { width } = Dimensions.get('window');
-const SPACING = 16;
-const CARD_SIZE = (width - SPACING * 4) / 3; // perfect 3 column
 
 export const AstroFeatureGridStyles = StyleSheet.create({
   card: {
-    width: CARD_SIZE,
-    height: CARD_SIZE,
+    width: '30%',
+    height: '100%',
     backgroundColor: LightColors.background,
-    borderRadius: 18,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 6,
