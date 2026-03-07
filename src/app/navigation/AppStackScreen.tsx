@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, Image } from 'react-native';
 
@@ -17,6 +17,31 @@ const Stack = createNativeStackNavigator<AppStackParamList>();
 
 export default function AppStackScreen() {
   const { activeChat } = useActiveChat();
+  const countdownSeconds = 60;
+  const showTimer = true;
+  const [remainingSeconds, setRemainingSeconds] = useState(countdownSeconds);
+
+  useEffect(() => {
+    setRemainingSeconds(countdownSeconds);
+
+    if (!showTimer) {
+      return undefined;
+    }
+
+    const interval = setInterval(() => {
+      setRemainingSeconds(prev => Math.max(prev - 1, 0));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [showTimer, countdownSeconds]);
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${minutes} : ${secs}`;
+  };
 
   return (
     <Stack.Navigator>
@@ -53,17 +78,25 @@ export default function AppStackScreen() {
             </View>
           ),
           headerRight: () => (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 16,
-                opacity: 0.3,
-              }}
-            >
-              <PhoneCall />
-              <VideoIcon />
-            </View>
+            showTimer ? (
+              <View style={{ marginHorizontal: 16 }}>
+                <Text style={{ fontSize: 16, fontWeight: '600' }}>
+                  {formatTime(remainingSeconds)}
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 16,
+                  opacity: 0.3,
+                }}
+              >
+                <PhoneCall />
+                <VideoIcon />
+              </View>
+            )
           ),
         }}
       />

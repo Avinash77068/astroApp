@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { useActiveChat } from '../../../../store/useActiveChat';
 import { AppStackParamList } from '../../../../app/navigation/AppStackScreen';
 import MessageItem from './components/MessageItem';
@@ -23,11 +23,30 @@ import {
   sendChatMessage,
 } from './utils/chatUtils';
 import { useAuthStore } from '../../../../store/authStore';
+import AlertDialog from '../../../common/AlertDialog';
 
 const ChatWithAstrologer = () => {
   const route = useRoute<RouteProp<AppStackParamList, 'ChatWithAstrologer'>>();
   const astrologer = route.params?.astrologer;
-  const { user } = useAuthStore()
+  const [showRechargeModal, setShowRechargeModal] = useState(false);
+  const { user } = useAuthStore();
+  const navigation = useNavigation();
+  const [remainingSeconds, setRemainingSeconds] = useState(60);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRemainingSeconds(prev => {
+        if (prev <= 1) {
+          setShowRechargeModal(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+  
   console.log('user', user);
   const { setActiveChat } = useActiveChat();
   useEffect(() => {
@@ -111,6 +130,15 @@ const ChatWithAstrologer = () => {
           <Text style={styles.sendText}>Send</Text>
         </TouchableOpacity>
       </View>
+      <AlertDialog
+        visible={showRechargeModal}
+        title="Recharge Required"
+        message="Recharge is mandatory to continue using the chat service."
+        onConfirm={() => {
+          setShowRechargeModal(false);
+          navigation.goBack();
+        }}
+      />
     </KeyboardAvoidingView>
   );
 };
