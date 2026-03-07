@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { LightColors } from "../../../../constant/colors";
 
 export const AstroFeatureGridStyles = StyleSheet.create({

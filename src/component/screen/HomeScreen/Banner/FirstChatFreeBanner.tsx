@@ -11,7 +11,7 @@ const FirstChatFreeBanner: React.FC<Props> = ({ onPress }) => {
       activeOpacity={1}
       onPress={onPress}
       style={{
-        width: '100%',
+        width: '96%',
         flexDirection: 'row',
         paddingVertical: '5%',
         overflow: 'hidden',
@@ -21,10 +21,9 @@ const FirstChatFreeBanner: React.FC<Props> = ({ onPress }) => {
         source={freeBannerImage}
         style={{
           width: '100%',
-          height: 125,
-          overflow: 'hidden',
+          aspectRatio: 375 / 100,
         }}
-        resizeMode="cover"
+        resizeMode="stretch"
       />
     </TouchableOpacity>
   );

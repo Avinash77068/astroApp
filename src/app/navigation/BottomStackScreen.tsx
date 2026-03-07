@@ -19,7 +19,14 @@ import { View } from 'react-native';
 import { useHomepage } from '../../hooks/useHomepage';
 import { useAuthStore } from '../../store/authStore';
 
-const Tab = createBottomTabNavigator();
+export type BottomTabParamList = {
+  Home: undefined;
+  Kundli: undefined;
+  Chat: undefined;
+  Profile: undefined;
+};
+
+const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomStackScreen() {
   const { toggleSidebar, isSidebarOpen: sidebar } = useSidebar();

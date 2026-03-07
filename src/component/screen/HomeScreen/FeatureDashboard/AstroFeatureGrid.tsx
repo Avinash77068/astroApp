@@ -38,7 +38,7 @@ const AstroFeatureGrid: React.FC<Props> = ({ data, onPress }) => {
       keyExtractor={(item, index) => item.id || item.route || index.toString()}
       renderItem={renderItem}
       columnWrapperStyle={{ justifyContent: 'space-between' }}
-      contentContainerStyle={{ paddingHorizontal: Spacing.md, paddingTop: 16 }}
+      contentContainerStyle={{ paddingHorizontal: Spacing.md}}
     />
   );
 };

@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { BottomTabParamList } from '../../../app/navigation/BottomStackScreen';
 import useSidebar from '../../../store/useSidebar';
 import SidebarComponent from '../../common/Sidebar';
 import { styles } from './HomeScreenCss';
 import { useHomepage } from '../../../hooks/useHomepage';
 import { useAstroLoger } from '../../../hooks/useAstroLoger';
 import SearchBar from '../../customComponent/SearchBar';
-
 import FirstChatFreeBanner from './Banner/FirstChatFreeBanner';
 import AstroFeatureGrid from './FeatureDashboard/AstroFeatureGrid';
 import Button from '../../customComponent/Button';
@@ -14,13 +15,12 @@ import { MessageCircle, PhoneCall } from 'lucide-react-native';
 import { LightColors } from '../../../constant/colors';
 import LiveAstroLogerList from './astrologerList/LiveAstroLogerList';
 
-
 const HomeScreen = () => {
+  const Navigation = useNavigation<NavigationProp<BottomTabParamList>>();
   const { isSidebarOpen } = useSidebar();
   const { data: astrologerData } = useAstroLoger();
   const homepageData = useHomepage();
   const appConfig = homepageData?.data?.appConfig;
-  console.log(appConfig, 'homepageData');
   
   const gridConfig = homepageData?.data?.gridConfig;
   const gridItems = gridConfig ? [
@@ -37,7 +37,7 @@ const HomeScreen = () => {
       <View style={styles.content}>
         <SearchBar value="" onChangeText={() => {}} />
         <LiveAstroLogerList data={astrologerData?.astrologerList} />
-        <FirstChatFreeBanner onPress={() => {}} />
+        <FirstChatFreeBanner onPress={() => {Navigation.navigate('Chat');}} />
         <AstroFeatureGrid
           data={gridItems}
           onPress={item => console.log('Navigate to:', item.route)}
