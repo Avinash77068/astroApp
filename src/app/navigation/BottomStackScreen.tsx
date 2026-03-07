@@ -36,7 +36,7 @@ export default function BottomStackScreen() {
             return (
               <TouchableOpacity
                 onPress={toggleSidebar}
-                style={{ marginHorizontal: 16 }}
+                style={{ marginHorizontal: 16}}
               >
                 {!sidebar ? (
                   <Menu size={24} />

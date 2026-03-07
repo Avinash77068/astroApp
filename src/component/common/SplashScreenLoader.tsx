@@ -51,8 +51,8 @@ const SplashScreenLoader: React.FC<SplashScreenProps> = ({ onFinish }) => {
         <View style={styles.iconContainer}>
           <Image source={logo} style={styles.logo} />
         </View>
-        <Text style={styles.title}>{appConfig?.appName}</Text>
-        <Text style={styles.subtitle}>{appConfig?.appDescription}</Text>
+        <Text style={styles.title}>{appConfig?.appName || "Astro Logger"}</Text>
+        <Text style={styles.subtitle}>{appConfig?.appDescription || "Your AI-powered astrological companion"}</Text>
         <View style={styles.loadingBar}>
           <Animated.View
             style={[
