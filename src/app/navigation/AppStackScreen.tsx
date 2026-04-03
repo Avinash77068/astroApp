@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, Image } from 'react-native';
 
@@ -6,6 +6,7 @@ import BottomStackScreen from './BottomStackScreen';
 import { useActiveChat } from '../../store/useActiveChat';
 import { PhoneCall, VideoIcon } from 'lucide-react-native';
 import ChatWithAstrologer from '../../component/screen/ChatScreen/ChatScreen/ChatWithAstrologer';
+import GenericScreen from '../../component/screen/GenericScreen/GenericScreen';
 import { activeUser } from '../../component/screen/HomeScreen/astrologerList/types';
 
 export type AppStackParamList = {
@@ -14,37 +15,16 @@ export type AppStackParamList = {
     astrologer: activeUser;
     chatHistory?: any[];
   };
+  GenericScreen: {
+    title: string;
+    route: string;
+  };
 };
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
 export default function AppStackScreen() {
   const { activeChat } = useActiveChat();
-  const countdownSeconds = 60;
-  const showTimer = true;
-  const [remainingSeconds, setRemainingSeconds] = useState(countdownSeconds);
-
-  useEffect(() => {
-    setRemainingSeconds(countdownSeconds);
-
-    if (!showTimer) {
-      return undefined;
-    }
-
-    const interval = setInterval(() => {
-      setRemainingSeconds(prev => Math.max(prev - 1, 0));
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [activeChat, showTimer, countdownSeconds]);
-
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60)
-      .toString()
-      .padStart(2, '0');
-    const secs = (seconds % 60).toString().padStart(2, '0');
-    return `${minutes} : ${secs}`;
-  };
 
   return (
     <Stack.Navigator>
@@ -81,27 +61,25 @@ export default function AppStackScreen() {
             </View>
           ),
           headerRight: () => (
-            showTimer ? (
-              <View style={{ marginHorizontal: 16 }}>
-                <Text style={{ fontSize: 16, fontWeight: '600' }}>
-                  {formatTime(remainingSeconds)}
-                </Text>
-              </View>
-            ) : (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: 16,
-                  opacity: 0.3,
-                }}
-              >
-                <PhoneCall />
-                <VideoIcon />
-              </View>
-            )
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 16,
+                opacity: 0.3,
+              }}
+            >
+              <PhoneCall />
+              <VideoIcon />
+            </View>
           ),
         }}
+      />
+      
+      <Stack.Screen
+        name="GenericScreen"
+        component={GenericScreen}
+        options={{ headerShown: true }}
       />
     </Stack.Navigator>
   );
