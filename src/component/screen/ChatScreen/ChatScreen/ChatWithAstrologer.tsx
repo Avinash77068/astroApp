@@ -23,32 +23,12 @@ import {
   sendChatMessage,
 } from './utils/chatUtils';
 import { useAuthStore } from '../../../../store/authStore';
-import AlertDialog from '../../../common/AlertDialog';
 
 const ChatWithAstrologer = () => {
   const route = useRoute<RouteProp<AppStackParamList, 'ChatWithAstrologer'>>();
   const astrologer = route.params?.astrologer;
-  const [showRechargeModal, setShowRechargeModal] = useState(false);
   const { user } = useAuthStore();
   const navigation = useNavigation();
-  const [remainingSeconds, setRemainingSeconds] = useState(60);
-  
-  useEffect(() => {
-    setRemainingSeconds(60);
-    setShowRechargeModal(false);
-    
-    const interval = setInterval(() => {
-      setRemainingSeconds(prev => {
-        if (prev <= 1) {
-          setShowRechargeModal(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [astrologer]);
   
   console.log('user', user);
   const { setActiveChat } = useActiveChat();
@@ -133,15 +113,6 @@ const ChatWithAstrologer = () => {
           <Text style={styles.sendText}>Send</Text>
         </TouchableOpacity>
       </View>
-      <AlertDialog
-        visible={showRechargeModal}
-        title="Recharge Required"
-        message="Recharge is mandatory to continue using the chat service."
-        onConfirm={() => {
-          setShowRechargeModal(false);
-          navigation.goBack();
-        }}
-      />
     </KeyboardAvoidingView>
   );
 };
@@ -213,7 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     borderRadius: 10,
     paddingHorizontal: 15,
-    paddingVertical: 12,
+    paddingVertical: 14,
     marginRight: 8,
   },
 
