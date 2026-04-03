@@ -61,3 +61,31 @@ export const userChat = async (
     throw error;
   }
 };
+
+export const getChatHistory = async (
+  endpoint: string,
+  body: {
+    userId: string;
+    astrologerId: string;
+  },
+): Promise<any> => {
+  try {
+    const response = await fetch(
+      `${ENV.API_BASE_URL}${endpoint}`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      },
+    );
+    const result = await response.json();
+    console.log('Chat history response:', result);
+    return result;
+  } catch (error) {
+    console.error('Error fetching chat history:', error);
+    throw error;
+  }
+};

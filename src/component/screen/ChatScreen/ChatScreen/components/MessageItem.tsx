@@ -28,6 +28,17 @@ const MessageItem: React.FC<MessageItemProps> = ({ item }) => {
 
   const isUser = item.sender === 'user';
 
+  const formatTime = (timestamp?: string) => {
+    if (!timestamp) return '';
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+  };
+
   return (
     <View
       style={{
@@ -55,6 +66,18 @@ const MessageItem: React.FC<MessageItemProps> = ({ item }) => {
           {item.text}
         </Text>
       </View>
+      {item.timestamp && (
+        <Text
+          style={{
+            fontSize: 10,
+            color: '#999',
+            marginTop: 4,
+            alignSelf: isUser ? 'flex-end' : 'flex-start',
+          }}
+        >
+          {formatTime(item.timestamp)}
+        </Text>
+      )}
     </View>
   );
 };

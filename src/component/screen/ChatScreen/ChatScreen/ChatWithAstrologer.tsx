@@ -27,10 +27,10 @@ import { useAuthStore } from '../../../../store/authStore';
 const ChatWithAstrologer = () => {
   const route = useRoute<RouteProp<AppStackParamList, 'ChatWithAstrologer'>>();
   const astrologer = route.params?.astrologer;
+  const chatHistory = route.params?.chatHistory || [];
   const { user } = useAuthStore();
-  const navigation = useNavigation();
+
   
-  console.log('user', user);
   const { setActiveChat } = useActiveChat();
   useEffect(() => {
     if (astrologer) {
@@ -38,9 +38,44 @@ const ChatWithAstrologer = () => {
     }
   }, [astrologer, setActiveChat]);
 
-  const [messages, setMessages] = useState<Message[]>([
-    createInitialMessage(astrologer?.name),
-  ]);
+  // Convert chat history to Message format
+  const convertChatHistoryToMessages = (history: any[]): Message[] => {
+    console.log('Converting chat history, length:', history.length);
+    const messages: Message[] = [];
+    
+    history.forEach((chat, index) => {
+      console.log(`Chat ${index}:`, chat);
+      
+      // Add user message
+      messages.push({
+        id: chat._id + '_user',
+        text: chat.message,
+        sender: 'user',
+        timestamp: chat.timestamp,
+      });
+      
+      // Add astrologer response
+      if (chat.astroResponse) {
+        messages.push({
+          id: chat._id + '_astro',
+          text: chat.astroResponse,
+          sender: 'astrologer',
+          timestamp: chat.timestamp,
+        });
+      }
+    });
+    
+    console.log('Converted messages:', messages);
+    return messages;
+  };
+
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const historyMessages = convertChatHistoryToMessages(chatHistory);
+    console.log('Initial messages state:', historyMessages);
+    return historyMessages.length > 0 
+      ? historyMessages 
+      : [createInitialMessage(astrologer?.name)];
+  });
 
   const [input, setInput] = useState('');
   const flatListRef = useRef<FlatList>(null);
@@ -79,7 +114,9 @@ const ChatWithAstrologer = () => {
   };
 
   useEffect(() => {
-    flatListRef.current?.scrollToEnd({ animated: true });
+    setTimeout(() => {
+      flatListRef.current?.scrollToEnd({ animated: true });
+    }, 100);
   }, [messages]);
 
   const renderItem = ({ item }: { item: Message }) => (
@@ -89,8 +126,8 @@ const ChatWithAstrologer = () => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={80}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
       <FlatList
         ref={flatListRef}
@@ -98,6 +135,12 @@ const ChatWithAstrologer = () => {
         keyExtractor={item => item.id}
         renderItem={renderItem}
         contentContainerStyle={styles.chatArea}
+        onContentSizeChange={() => {
+          flatListRef.current?.scrollToEnd({ animated: true });
+        }}
+        onLayout={() => {
+          flatListRef.current?.scrollToEnd({ animated: false });
+        }}
       />
 
       {/* Input Section */}

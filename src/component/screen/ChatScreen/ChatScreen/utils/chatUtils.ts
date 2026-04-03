@@ -5,18 +5,21 @@ export interface Message {
   id: string;
   text: string;
   sender: 'user' | 'astrologer' | 'typing';
+  timestamp?: string;
 }
 
 export const createUserMessage = (text: string): Message => ({
   id: Date.now().toString(),
   text,
   sender: 'user',
+  timestamp: new Date().toISOString(),
 });
 
 export const createAstroMessage = (text: string): Message => ({
   id: Date.now().toString() + 'astro',
   text,
   sender: 'astrologer',
+  timestamp: new Date().toISOString(),
 });
 
 export const createTypingMessage = (): Message => ({

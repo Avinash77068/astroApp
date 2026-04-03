@@ -10,7 +10,10 @@ import { activeUser } from '../../component/screen/HomeScreen/astrologerList/typ
 
 export type AppStackParamList = {
   BottomStack: undefined;
-  ChatWithAstrologer: { astrologer: activeUser };
+  ChatWithAstrologer: { 
+    astrologer: activeUser;
+    chatHistory?: any[];
+  };
 };
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
